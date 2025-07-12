@@ -1,0 +1,43 @@
+package com.pet.moduleregister.adapters.out.persistence.user.mapper;
+
+import com.pet.moduleregister.adapters.out.persistence.shared.mapper.DomainMapper;
+import com.pet.moduleregister.adapters.out.persistence.user.UserEntity;
+import com.pet.moduleregister.domain.modules.user.model.User;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Component
+public class UserDomainMapper implements DomainMapper<User, UserEntity> {
+    @Override
+    public User toDomain(UserEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        return new User(
+                entity.getUserId(),
+                entity.getPassword(),
+                entity.getCreatedAt(),
+                entity.getStatus(),
+                entity.getCitizenId(),
+                entity.getFirstName(),
+                entity.getLastName(),
+                entity.getEmail(),
+                entity.getPhoneNumber(),
+                entity.getGender(),
+                entity.getDateOfBirth(),
+                entity.getRole()
+        );
+    }
+
+    @Override
+    public List<User> toDomain(List<UserEntity> entities) {
+        if (entities == null) {
+            return null;
+        }
+        return entities.stream()
+                .map(this::toDomain)
+                .collect(Collectors.toList());
+    }
+}
