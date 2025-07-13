@@ -1,8 +1,8 @@
-package com.pet.moduleregister.application.user;
+package com.pet.moduleregister.application.user.usecase;
 
 import com.pet.moduleregister.adapters.out.persistence.user.UserRepository;
-import com.pet.moduleregister.domain.modules.user.model.User;
-import com.pet.moduleregister.domain.modules.user.ports.in.GetUserUsecase;
+import com.pet.moduleregister.domain.user.model.User;
+import com.pet.moduleregister.application.user.ports.in.GetUserUsecase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

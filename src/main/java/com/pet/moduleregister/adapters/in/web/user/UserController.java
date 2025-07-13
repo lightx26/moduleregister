@@ -1,6 +1,6 @@
-package com.pet.moduleregister.adapters.in.web;
+package com.pet.moduleregister.adapters.in.web.user;
 
-import com.pet.moduleregister.domain.modules.user.ports.in.GetUserUsecase;
+import com.pet.moduleregister.application.user.ports.in.GetUserUsecase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

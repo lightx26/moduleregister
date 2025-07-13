@@ -1,8 +1,8 @@
-package com.pet.moduleregister.domain.modules.user.model;
+package com.pet.moduleregister.domain.user.model;
 
-import com.pet.moduleregister.domain.modules.user.enums.AccountStatus;
-import com.pet.moduleregister.domain.modules.user.enums.Gender;
-import com.pet.moduleregister.domain.modules.user.enums.UserRole;
+import com.pet.moduleregister.domain.user.enums.AccountStatus;
+import com.pet.moduleregister.domain.user.enums.Gender;
+import com.pet.moduleregister.domain.user.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

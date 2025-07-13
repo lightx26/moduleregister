@@ -1,4 +1,4 @@
-package com.pet.moduleregister.domain.modules.user.enums;
+package com.pet.moduleregister.domain.user.enums;
 
 public enum AccountStatus {
     ACTIVE,     // Still in use

@@ -1,12 +1,9 @@
 package com.pet.moduleregister.adapters.out.persistence.user;
 
-import com.pet.moduleregister.domain.modules.user.enums.AccountStatus;
-import com.pet.moduleregister.domain.modules.user.enums.Gender;
-import com.pet.moduleregister.domain.modules.user.enums.UserRole;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.pet.moduleregister.domain.user.enums.AccountStatus;
+import com.pet.moduleregister.domain.user.enums.Gender;
+import com.pet.moduleregister.domain.user.enums.UserRole;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,6 +27,7 @@ public class UserEntity {
     private Instant createdAt;
 
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private AccountStatus status;
 
     // Personal information
@@ -49,11 +47,13 @@ public class UserEntity {
     private String phoneNumber;
 
     @Column(name = "gender")
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 
     @Column(name = "role")
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 }

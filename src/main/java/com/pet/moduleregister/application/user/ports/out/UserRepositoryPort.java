@@ -1,6 +1,6 @@
-package com.pet.moduleregister.domain.modules.user.ports.out;
+package com.pet.moduleregister.application.user.ports.out;
 
-import com.pet.moduleregister.domain.modules.user.model.User;
+import com.pet.moduleregister.domain.user.model.User;
 
 import java.util.List;
 import java.util.Optional;

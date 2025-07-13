@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers(
                         "v1/health-check",
-                        "v1/users"
+                        "v1/auth/login"
                     )
                     .permitAll();
                     authorize.anyRequest().authenticated();

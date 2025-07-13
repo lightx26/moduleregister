@@ -5,5 +5,5 @@
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <include file="db/changelog/changelog-2025.07.11.xml" />
-
+    <include file="db/changelog/changelog-2025.07.12.xml" />
 </databaseChangeLog>

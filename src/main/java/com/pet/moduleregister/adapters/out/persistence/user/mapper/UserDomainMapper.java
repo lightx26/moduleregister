@@ -2,7 +2,7 @@ package com.pet.moduleregister.adapters.out.persistence.user.mapper;
 
 import com.pet.moduleregister.adapters.out.persistence.shared.mapper.DomainMapper;
 import com.pet.moduleregister.adapters.out.persistence.user.UserEntity;
-import com.pet.moduleregister.domain.modules.user.model.User;
+import com.pet.moduleregister.domain.user.model.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

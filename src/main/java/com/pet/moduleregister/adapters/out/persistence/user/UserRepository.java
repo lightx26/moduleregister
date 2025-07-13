@@ -1,8 +1,8 @@
 package com.pet.moduleregister.adapters.out.persistence.user;
 
 import com.pet.moduleregister.adapters.out.persistence.user.mapper.UserDomainMapper;
-import com.pet.moduleregister.domain.modules.user.model.User;
-import com.pet.moduleregister.domain.modules.user.ports.out.UserRepositoryPort;
+import com.pet.moduleregister.domain.user.model.User;
+import com.pet.moduleregister.application.user.ports.out.UserRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
