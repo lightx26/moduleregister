@@ -1,10 +1,10 @@
-package com.pet.moduleregister.application.user.usecase;
+package com.pet.moduleregister.application.auth.usecases;
 
+import com.pet.moduleregister.application.auth.ports.in.LoginUsecase;
+import com.pet.moduleregister.application.auth.ports.in.dto.LoginDataDTO;
+import com.pet.moduleregister.application.auth.ports.in.dto.LoginResultDTO;
+import com.pet.moduleregister.application.auth.ports.out.TokenServicePort;
 import com.pet.moduleregister.application.shared.exceptions.NotFoundException;
-import com.pet.moduleregister.application.user.ports.in.LoginUsecase;
-import com.pet.moduleregister.application.user.ports.in.dto.LoginDataDTO;
-import com.pet.moduleregister.application.user.ports.in.dto.LoginResultDTO;
-import com.pet.moduleregister.application.user.ports.out.TokenGeneratorPort;
 import com.pet.moduleregister.application.user.ports.out.UserRepositoryPort;
 import com.pet.moduleregister.domain.user.model.User;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class LoginUsecaseImpl implements LoginUsecase {
 
     private final UserRepositoryPort userRepositoryPort;
-    private final TokenGeneratorPort tokenGeneratorPort;
+    private final TokenServicePort tokenServicePort;
     private final PasswordEncoder passwordEncoder;
     @Override
     public LoginResultDTO login(LoginDataDTO loginData) {
@@ -30,8 +30,8 @@ public class LoginUsecaseImpl implements LoginUsecase {
             throw new IllegalArgumentException("Invalid user ID or password");
         }
 
-        String accessToken = tokenGeneratorPort.generateAccessToken(user.getUserId());
-        String refreshToken = tokenGeneratorPort.generateRefreshToken(user.getUserId());
+        String accessToken = tokenServicePort.generateAccessToken(user.getUserId());
+        String refreshToken = tokenServicePort.generateRefreshToken(user.getUserId());
         return new LoginResultDTO(accessToken, refreshToken);
     }
 }

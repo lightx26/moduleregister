@@ -1,31 +1,27 @@
 package com.pet.moduleregister.adapters.out.token;
 
-import com.pet.moduleregister.application.user.ports.out.TokenGeneratorPort;
+import com.pet.moduleregister.application.auth.ports.out.TokenServicePort;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
-import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.stereotype.Component;
 
-import java.security.Key;
+import javax.crypto.SecretKey;
 import java.time.Instant;
 import java.util.Date;
 
 @Component
-public class JwtGenerator implements TokenGeneratorPort {
-    @Value("${moduleregister.jwt.secret.key}")
-    private String secret;
+@RequiredArgsConstructor
+public class JwtTokenService implements TokenServicePort {
     @Value("${moduleregister.jwt.expiry.access-token}")
     private long accessTokenExpirySeconds;
     @Value("${moduleregister.jwt.expiry.refresh-token}")
     private long refreshTokenExpirySeconds;
 
-    private Key secretKey;
+    private final SecretKey secretKey;
+    private final JwtDecoder jwtDecoder;
 
-    @PostConstruct
-    private void init() {
-        this.secretKey = Keys.hmacShaKeyFor(secret.getBytes());
-    }
     private String generateToken(String subject, long expirySeconds) {
         Instant now = Instant.now();
         return Jwts.builder()
@@ -45,5 +41,21 @@ public class JwtGenerator implements TokenGeneratorPort {
     @Override
     public String generateRefreshToken(String userId) {
         return generateToken(userId, refreshTokenExpirySeconds); // 30 days
+    }
+
+    @Override
+    public String extractUserId(String token) {
+        return jwtDecoder.decode(token).getSubject();
+    }
+
+    @Override
+    public boolean isValidToken(String token) {
+        try {
+            jwtDecoder.decode(token);
+            return true;
+        } catch (Exception e) {
+            System.err.println("Invalid token: " + e.getMessage());
+            return false;
+        }
     }
 }

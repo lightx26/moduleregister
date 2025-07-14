@@ -1,4 +1,4 @@
-package com.pet.moduleregister.application.user.usecase;
+package com.pet.moduleregister.application.user.usecases;
 
 import com.pet.moduleregister.adapters.out.persistence.user.UserRepository;
 import com.pet.moduleregister.domain.user.model.User;

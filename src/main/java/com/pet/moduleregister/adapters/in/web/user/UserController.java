@@ -15,7 +15,6 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<?> getAllUsers() {
-        // Implement the logic to retrieve all users
         var users = getUserUsecase.getAllUsers();
         return ResponseEntity.ok().body(users);
     }

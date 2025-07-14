@@ -1,4 +1,4 @@
-package com.pet.moduleregister.application.user.ports.in.dto;
+package com.pet.moduleregister.application.auth.ports.in.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
