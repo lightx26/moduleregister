@@ -1,4 +1,4 @@
-package com.pet.moduleregister.adapters.out.persistence.user.mapper;
+package com.pet.moduleregister.adapters.out.persistence.user.mappers;
 
 import com.pet.moduleregister.adapters.out.persistence.shared.mapper.DomainMapper;
 import com.pet.moduleregister.adapters.out.persistence.user.UserEntity;
@@ -33,7 +33,7 @@ public class UserDomainMapper implements DomainMapper<User, UserEntity> {
 
     @Override
     public List<User> toDomain(List<UserEntity> entities) {
-        if (entities == null) {
+        if (entities == null || entities.isEmpty()) {
             return null;
         }
         return entities.stream()

@@ -13,7 +13,7 @@ import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
-public class JwtTokenService implements TokenServicePort {
+public class JwtTokenServiceAdapter implements TokenServicePort {
     @Value("${moduleregister.jwt.expiry.access-token}")
     private long accessTokenExpirySeconds;
     @Value("${moduleregister.jwt.expiry.refresh-token}")
@@ -49,12 +49,21 @@ public class JwtTokenService implements TokenServicePort {
     }
 
     @Override
+    public Instant extractIssuedAt(String token) {
+        return jwtDecoder.decode(token).getIssuedAt();
+    }
+
+    @Override
+    public Instant extractExpiration(String token) {
+        return jwtDecoder.decode(token).getExpiresAt();
+    }
+
+    @Override
     public boolean isValidToken(String token) {
         try {
             jwtDecoder.decode(token);
             return true;
         } catch (Exception e) {
-            System.err.println("Invalid token: " + e.getMessage());
             return false;
         }
     }

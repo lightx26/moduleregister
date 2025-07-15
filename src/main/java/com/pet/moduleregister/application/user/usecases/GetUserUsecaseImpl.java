@@ -1,6 +1,6 @@
 package com.pet.moduleregister.application.user.usecases;
 
-import com.pet.moduleregister.adapters.out.persistence.user.UserRepository;
+import com.pet.moduleregister.adapters.out.persistence.user.UserRepositoryAdapter;
 import com.pet.moduleregister.domain.user.model.User;
 import com.pet.moduleregister.application.user.ports.in.GetUserUsecase;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GetUserUsecaseImpl implements GetUserUsecase {
 
-    private final UserRepository userRepository;
+    private final UserRepositoryAdapter userRepository;
 
     @Override
     public List<User> getAllUsers() {

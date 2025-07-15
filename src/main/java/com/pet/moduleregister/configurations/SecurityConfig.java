@@ -1,6 +1,6 @@
 package com.pet.moduleregister.configurations;
 
-import com.pet.moduleregister.adapters.in.web.shared.JwtAuthenticationFilter;
+import com.pet.moduleregister.adapters.in.web.shared.security.JwtAuthenticationFilter;
 import com.pet.moduleregister.application.auth.ports.out.TokenServicePort;
 import com.pet.moduleregister.application.user.ports.out.UserRepositoryPort;
 import lombok.RequiredArgsConstructor;

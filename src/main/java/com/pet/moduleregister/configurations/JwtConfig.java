@@ -23,9 +23,9 @@ public class JwtConfig {
     @Bean
     JwtDecoder jwtDecoder(SecretKey secretKey) {
         MacAlgorithm macAlgorithm = switch (secretKey.getAlgorithm()) {
-            case "HmacSHA256" -> MacAlgorithm.HS256; // 256 bits
-            case "HmacSHA384" -> MacAlgorithm.HS384; // 384 bits
-            case "HmacSHA512" -> MacAlgorithm.HS512; // 512 bits
+            case "HmacSHA256" -> MacAlgorithm.HS256;
+            case "HmacSHA384" -> MacAlgorithm.HS384;
+            case "HmacSHA512" -> MacAlgorithm.HS512;
             default -> throw new IllegalArgumentException("Invalid secret key length: " + secretKey.getEncoded().length);
         };
 
