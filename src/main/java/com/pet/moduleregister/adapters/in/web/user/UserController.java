@@ -1,6 +1,7 @@
 package com.pet.moduleregister.adapters.in.web.user;
 
-import com.pet.moduleregister.application.user.ports.in.GetUserUsecase;
+import com.pet.moduleregister.adapters.in.web.user.dto.response.CurrentUserResponse;
+import com.pet.moduleregister.adapters.in.web.user.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/users")
 @RequiredArgsConstructor
 public class UserController {
-    private final GetUserUsecase getUserUsecase;
+    private final UserFacade userFacade;
 
-    @GetMapping
-    public ResponseEntity<?> getAllUsers() {
-        var users = getUserUsecase.getAllUsers();
-        return ResponseEntity.ok().body(users);
+    @GetMapping("/me")
+    public ResponseEntity<?> getCurrentUser() {
+        CurrentUserResponse userResponse = userFacade.getCurrentUser();
+        return ResponseEntity.ok().body(userResponse);
     }
 }

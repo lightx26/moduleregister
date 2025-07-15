@@ -2,18 +2,21 @@ package com.pet.moduleregister.adapters.in.web.shared;
 
 import com.pet.moduleregister.adapters.in.web.shared.dto.response.ErrorResponse;
 import com.pet.moduleregister.application.shared.exceptions.NotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestControllerAdvice
 public class ApiExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ErrorResponse> handleUserAlreadyExists(RuntimeException ex) {
+    public ResponseEntity<ErrorResponse> handleServerError(RuntimeException ex) {
         ErrorResponse errRes = ErrorResponse.builder()
                 .errorCode("INTERNAL_SERVER_ERROR")
                 .message(ex.getMessage() != null ? ex.getMessage() : "An unexpected error occurred")
@@ -22,6 +25,17 @@ public class ApiExceptionHandler {
                 .build();
 
         return ResponseEntity.internalServerError().body(errRes);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> handleAccessDenied(AccessDeniedException ex) {
+        ErrorResponse errRes = ErrorResponse.builder()
+                .errorCode("FORBIDDEN")
+                .message("Access denied")
+                .timestamp(Instant.now())
+                .details(List.of(ex.getMessage()))
+                .build();
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errRes);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

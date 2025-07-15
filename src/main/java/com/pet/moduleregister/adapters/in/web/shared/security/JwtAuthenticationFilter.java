@@ -34,7 +34,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
         String accessToken = extractAccessToken(request);
-        if (accessToken != null && tokenBlackListService.isTokenBlacklisted(accessToken) && jwtTokenService.isValidToken(accessToken)) {
+        if (accessToken != null
+                && !tokenBlackListService.isTokenBlacklisted(accessToken)
+                && jwtTokenService.isValidToken(accessToken)) {
             String userId = jwtTokenService.extractUserId(accessToken);
             Optional<User> userOpt = userRepository.findById(userId);
 
@@ -50,6 +52,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     )));
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
+
         filterChain.doFilter(request, response);
     }
 

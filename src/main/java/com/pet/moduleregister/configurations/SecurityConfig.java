@@ -1,6 +1,8 @@
 package com.pet.moduleregister.configurations;
 
+import com.pet.moduleregister.adapters.in.web.shared.security.CustomAuthenticationEntryPoint;
 import com.pet.moduleregister.adapters.in.web.shared.security.JwtAuthenticationFilter;
+import com.pet.moduleregister.application.auth.ports.out.TokenBlackListPort;
 import com.pet.moduleregister.application.auth.ports.out.TokenServicePort;
 import com.pet.moduleregister.application.user.ports.out.UserRepositoryPort;
 import lombok.RequiredArgsConstructor;
@@ -29,12 +31,14 @@ public class SecurityConfig {
     }
 
     @Bean
-    public JwtAuthenticationFilter jwtFilter(TokenServicePort jwtTokenService, UserRepositoryPort repositoryPort) {
-        return new JwtAuthenticationFilter(jwtTokenService, repositoryPort);
+    public JwtAuthenticationFilter jwtFilter(TokenServicePort jwtTokenService, UserRepositoryPort repositoryPort, TokenBlackListPort tokenBlackListService) {
+        return new JwtAuthenticationFilter(jwtTokenService, repositoryPort, tokenBlackListService);
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtFilter) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http,
+                                                   JwtAuthenticationFilter jwtFilter,
+                                                   CustomAuthenticationEntryPoint authEntryPoint) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -45,11 +49,15 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers(
                         "v1/health-check",
-                        "v1/auth/login"
+                        "v1/auth/login",
+                        "v1/auth/refresh"
                     )
                     .permitAll();
                     authorize.anyRequest().authenticated();
                 })
+                .exceptionHandling(exception ->
+                    exception.authenticationEntryPoint(authEntryPoint)
+                )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
