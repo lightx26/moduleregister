@@ -9,6 +9,6 @@ public interface AuthTokenRepositoryPort {
     void create(AuthTokenDTO authTokenDTO);
     void update(AuthTokenDTO authTokenDTO);
     void update(String authTokenId, String refreshToken, Instant updatedAt);
-    Optional<AuthTokenDTO> findByUserIdAndToken(String userId, String refreshToken);
+    Optional<AuthTokenDTO> findByUserIdAndToken(Long userId, String refreshToken);
     void deleteById(String authTokenId);
 }

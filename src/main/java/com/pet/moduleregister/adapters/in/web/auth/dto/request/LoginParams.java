@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LoginParams {
-    @NotBlank(message = "userId is required")
-    private String userId;
+    @NotBlank(message = "userCode is required")
+    private String userCode;
     @NotBlank(message = "password is required")
     private String password;
 }

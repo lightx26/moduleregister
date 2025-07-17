@@ -3,7 +3,7 @@ package com.pet.moduleregister.adapters.in.web.user.facade;
 import com.pet.moduleregister.adapters.in.web.shared.exceptions.UnauthorizedException;
 import com.pet.moduleregister.adapters.in.web.shared.security.AuthUtils;
 import com.pet.moduleregister.adapters.in.web.user.dto.response.CurrentUserResponse;
-import com.pet.moduleregister.domain.user.model.User;
+import com.pet.moduleregister.domain.user.User;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,6 +15,7 @@ public class UserFacadeImpl implements UserFacade {
         );
         return CurrentUserResponse.builder()
                 .userId(currentUser.getUserId())
+                .userCode(currentUser.getUserCode())
                 .citizenId(currentUser.getCitizenId())
                 .email(currentUser.getEmail())
                 .phoneNumber(currentUser.getPhoneNumber())

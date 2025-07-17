@@ -1,4 +1,4 @@
-package com.pet.moduleregister.domain.user.model;
+package com.pet.moduleregister.domain.user;
 
 import com.pet.moduleregister.domain.user.enums.AccountStatus;
 import com.pet.moduleregister.domain.user.enums.Gender;
@@ -11,11 +11,11 @@ import java.time.Instant;
 import java.time.LocalDate;
 
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
 public class User {
     // Account information
-    private String userId;
+    private Long userId;
+    private String userCode;
     private String password;
     private Instant createdAt;
     private AccountStatus status;

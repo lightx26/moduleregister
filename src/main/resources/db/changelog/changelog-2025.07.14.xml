@@ -5,27 +5,15 @@
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <changeSet id="3_create_auth_token" author="Quang Nguyen">
-        <createTable tableName="auth_token">
-            <column name="auth_token_id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-
-            <column name="user_id" type="CHAR(9)">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="refresh_token" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="created_at" type="TIMESTAMP WITH TIMEZONE">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="updated_at" type="TIMESTAMP WITH TIMEZONE">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
+        <sql>
+            CREATE TABLE auth_token (
+                auth_token_id BIGSERIAL PRIMARY KEY,
+                user_id BIGINT NOT NULL,
+                refresh_token TEXT NOT NULL,
+                created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+                updated_at TIMESTAMP WITH TIME ZONE NOT NULL
+            );
+        </sql>
 
         <addForeignKeyConstraint
                 baseTableName="auth_token"

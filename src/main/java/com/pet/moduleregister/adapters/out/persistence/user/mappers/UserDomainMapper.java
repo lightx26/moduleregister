@@ -2,7 +2,7 @@ package com.pet.moduleregister.adapters.out.persistence.user.mappers;
 
 import com.pet.moduleregister.adapters.out.persistence.shared.mapper.DomainMapper;
 import com.pet.moduleregister.adapters.out.persistence.user.UserEntity;
-import com.pet.moduleregister.domain.user.model.User;
+import com.pet.moduleregister.domain.user.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,6 +17,7 @@ public class UserDomainMapper implements DomainMapper<User, UserEntity> {
         }
         return new User(
                 entity.getUserId(),
+                entity.getUserCode(),
                 entity.getPassword(),
                 entity.getCreatedAt(),
                 entity.getStatus(),

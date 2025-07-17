@@ -18,7 +18,10 @@ public class UserEntity {
     // Account information
     @Id
     @Column(name = "user_id")
-    private String userId;
+    private Long userId;
+
+    @Column(name = "user_code", unique = true)
+    private String userCode;
 
     @Column(name = "password")
     private String password;

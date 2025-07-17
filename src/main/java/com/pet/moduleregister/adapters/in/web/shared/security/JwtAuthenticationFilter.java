@@ -3,7 +3,7 @@ package com.pet.moduleregister.adapters.in.web.shared.security;
 import com.pet.moduleregister.application.auth.ports.out.TokenBlackListPort;
 import com.pet.moduleregister.application.auth.ports.out.TokenServicePort;
 import com.pet.moduleregister.application.user.ports.out.UserRepositoryPort;
-import com.pet.moduleregister.domain.user.model.User;
+import com.pet.moduleregister.domain.user.User;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -37,7 +37,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (accessToken != null
                 && !tokenBlackListService.isTokenBlacklisted(accessToken)
                 && jwtTokenService.isValidToken(accessToken)) {
-            String userId = jwtTokenService.extractUserId(accessToken);
+
+            Long userId = Long.parseLong(jwtTokenService.extractUserId(accessToken));
             Optional<User> userOpt = userRepository.findById(userId);
 
             if (userOpt.isEmpty()) {

@@ -1,6 +1,6 @@
 package com.pet.moduleregister.adapters.in.web.shared.security;
 
-import com.pet.moduleregister.domain.user.model.User;
+import com.pet.moduleregister.domain.user.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 

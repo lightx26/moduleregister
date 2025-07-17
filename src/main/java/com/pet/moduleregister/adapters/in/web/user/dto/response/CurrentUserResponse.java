@@ -10,7 +10,8 @@ import java.time.LocalDate;
 @Getter
 @Builder
 public class CurrentUserResponse {
-    private String userId;
+    private Long userId;
+    private String userCode;
     private String citizenId;
     private String firstName;
     private String lastName;

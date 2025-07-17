@@ -19,7 +19,7 @@ public class AuthTokenEntity {
     private String authTokenId;
 
     @Column(name = "user_id")
-    private String userId;
+    private Long userId;
 
     @Column(name = "refresh_token")
     private String refreshToken;

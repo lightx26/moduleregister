@@ -1,7 +1,7 @@
 package com.pet.moduleregister.adapters.out.persistence.user;
 
 import com.pet.moduleregister.adapters.out.persistence.user.mappers.UserDomainMapper;
-import com.pet.moduleregister.domain.user.model.User;
+import com.pet.moduleregister.domain.user.User;
 import com.pet.moduleregister.application.user.ports.out.UserRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -17,8 +17,14 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     private final UserDomainMapper userDomainMapper;
 
     @Override
-    public Optional<User> findById(String userId) {
+    public Optional<User> findById(Long userId) {
         return userJpaRepository.findById(userId)
+                .map(userDomainMapper::toDomain);
+    }
+
+    @Override
+    public Optional<User> findByCode(String userCode) {
+        return userJpaRepository.findByUserCode(userCode)
                 .map(userDomainMapper::toDomain);
     }
 

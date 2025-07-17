@@ -1,7 +1,11 @@
 package com.pet.moduleregister.adapters.out.persistence.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
-public interface UserJpaRepository extends JpaRepository<UserEntity, String> {
+import java.util.Optional;
 
+public interface UserJpaRepository extends JpaRepository<UserEntity, Long> {
+    @Query("SELECT u FROM UserEntity u WHERE u.userCode = ?1")
+    Optional<UserEntity> findByUserCode(String userCode);
 }

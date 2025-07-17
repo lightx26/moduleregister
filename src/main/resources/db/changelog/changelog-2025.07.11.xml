@@ -5,49 +5,70 @@
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <changeSet id="1_create_user_table" author="Quang Nguyen">
-        <createTable tableName="user">
-            <column name="user_id" type="CHAR(9)">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
+<!--        <createTable tableName="user">-->
+<!--            <column name="user_id" type="BIGINT" autoIncrement="true">-->
+<!--                <constraints primaryKey="true" nullable="false"/>-->
+<!--            </column>-->
 
-            <column name="password" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
+<!--            <column name="user_code" type="CHAR(9)">-->
+<!--                <constraints unique="true" nullable="false"/>-->
+<!--            </column>-->
 
-            <column name="created_at" type="TIMESTAMP WITH TIMEZONE">
-                <constraints nullable="false"/>
-            </column>
+<!--            <column name="password" type="TEXT">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
 
-            <column name="status" type="VARCHAR(20)">
-                <constraints nullable="false"/>
-            </column>
-            
-            <column name="citizen_id" type="VARCHAR(30)">
-                <constraints nullable="false" unique="true"/>
-            </column>
+<!--            <column name="created_at" type="TIMESTAMP WITH TIMEZONE">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
 
-            <column name="first_name" type="NVARCHAR(50)">
-                <constraints nullable="false"/>
-            </column>
+<!--            <column name="status" type="VARCHAR(20)">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--            -->
+<!--            <column name="citizen_id" type="VARCHAR(30)">-->
+<!--                <constraints nullable="false" unique="true"/>-->
+<!--            </column>-->
 
-            <column name="last_name" type="NVARCHAR(50)">
-                <constraints nullable="false"/>
-            </column>
+<!--            <column name="first_name" type="NVARCHAR(50)">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
 
-            <column name="phone_number" type="VARCHAR(20)"/>
-            <column name="email" type="VARCHAR(100)"/>
+<!--            <column name="last_name" type="NVARCHAR(50)">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
 
-            <column name="gender" type="VARCHAR(20)">
-                <constraints nullable="false"/>
-            </column>
+<!--            <column name="phone_number" type="VARCHAR(20)"/>-->
+<!--            <column name="email" type="VARCHAR(100)"/>-->
 
-            <column name="date_of_birth" type="DATE">
-                <constraints nullable="false"/>
-            </column>
+<!--            <column name="gender" type="VARCHAR(20)">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
 
-            <column name="role" type="VARCHAR(20)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
+<!--            <column name="date_of_birth" type="DATE">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+
+<!--            <column name="role" type="VARCHAR(20)">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--        </createTable>-->
+        <sql>
+            CREATE TABLE "user" (
+                                  user_id BIGSERIAL PRIMARY KEY,
+                                  user_code CHAR(9) NOT NULL UNIQUE,
+                                  password TEXT NOT NULL,
+                                  created_at TIMESTAMP WITH TIME ZONE NOT NULL default CURRENT_TIMESTAMP,
+                                  status VARCHAR(20) NOT NULL,
+                                  citizen_id VARCHAR(30) NOT NULL UNIQUE,
+                                  first_name VARCHAR(50) NOT NULL,
+                                  last_name VARCHAR(50) NOT NULL,
+                                  phone_number VARCHAR(20),
+                                  email VARCHAR(100),
+                                  gender VARCHAR(20) NOT NULL,
+                                  date_of_birth DATE NOT NULL,
+                                  role VARCHAR(20) NOT NULL
+            );
+        </sql>
     </changeSet>
 </databaseChangeLog>

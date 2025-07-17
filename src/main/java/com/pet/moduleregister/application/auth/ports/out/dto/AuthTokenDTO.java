@@ -9,7 +9,7 @@ import java.time.Instant;
 @Getter
 public class AuthTokenDTO {
     private String authTokenId;
-    private String userId;
+    private Long userId;
     private String refreshToken;
     private Instant createdAt;
     private Instant updatedAt;

@@ -39,7 +39,7 @@ public class AuthTokenRepositoryAdapter implements AuthTokenRepositoryPort {
     }
 
     @Override
-    public Optional<AuthTokenDTO> findByUserIdAndToken(String userId, String refreshToken) {
+    public Optional<AuthTokenDTO> findByUserIdAndToken(Long userId, String refreshToken) {
         Optional<AuthTokenEntity> authTokenEntity = authTokenJpaRepository.findByUserIdAndRefreshToken(userId, refreshToken);
         return authTokenEntity.map(authTokenDomainMapper::toDomain);
     }

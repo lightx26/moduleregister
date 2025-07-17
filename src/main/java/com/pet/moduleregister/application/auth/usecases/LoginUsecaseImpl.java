@@ -8,7 +8,7 @@ import com.pet.moduleregister.application.auth.ports.out.TokenServicePort;
 import com.pet.moduleregister.application.auth.ports.out.dto.AuthTokenDTO;
 import com.pet.moduleregister.application.shared.exceptions.NotFoundException;
 import com.pet.moduleregister.application.user.ports.out.UserRepositoryPort;
-import com.pet.moduleregister.domain.user.model.User;
+import com.pet.moduleregister.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,18 +27,18 @@ public class LoginUsecaseImpl implements LoginUsecase {
     @Override
     @Transactional
     public LoginResultDTO login(LoginDataDTO loginData) {
-        String userId = loginData.userId();
+        String userCode = loginData.userCode();
         String password = loginData.password();
 
-        User user = userRepositoryPort.findById(userId)
-                .orElseThrow(() -> new NotFoundException("Invalid user ID or password"));
+        User user = userRepositoryPort.findByCode(userCode)
+                .orElseThrow(() -> new NotFoundException("Invalid userCode or password"));
 
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new IllegalArgumentException("Invalid user ID or password");
+            throw new IllegalArgumentException("Invalid userCode or password");
         }
 
-        String accessToken = tokenServicePort.generateAccessToken(user.getUserId());
-        String refreshToken = tokenServicePort.generateRefreshToken(user.getUserId());
+        String accessToken = tokenServicePort.generateAccessToken(user.getUserId().toString());
+        String refreshToken = tokenServicePort.generateRefreshToken(user.getUserId().toString());
 
         // Store the refresh token in the database
         Instant tokenIssuedAt = tokenServicePort.extractIssuedAt(refreshToken);

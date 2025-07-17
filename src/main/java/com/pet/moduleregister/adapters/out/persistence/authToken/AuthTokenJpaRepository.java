@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface AuthTokenJpaRepository extends JpaRepository<AuthTokenEntity, String> {
     @Query("SELECT a FROM AuthTokenEntity a WHERE a.userId = ?1 AND a.refreshToken = ?2")
-    Optional<AuthTokenEntity> findByUserIdAndRefreshToken(String userId, String refreshToken);
+    Optional<AuthTokenEntity> findByUserIdAndRefreshToken(Long userId, String refreshToken);
 
     @Modifying
     @Query("UPDATE AuthTokenEntity a SET a.refreshToken = ?2, a.updatedAt = ?3 WHERE a.authTokenId = ?1")
