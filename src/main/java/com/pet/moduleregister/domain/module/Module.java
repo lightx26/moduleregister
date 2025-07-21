@@ -11,7 +11,7 @@ public class Module {
     private Long moduleId;
     private String moduleCode;
     private String name;
-    private int creditCount;
+    private int numberOfCredits;
     private boolean isCompulsory;
     private Long responsibleFaculty;
 

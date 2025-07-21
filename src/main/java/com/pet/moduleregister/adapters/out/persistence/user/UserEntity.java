@@ -17,6 +17,7 @@ import java.time.LocalDate;
 public class UserEntity {
     // Account information
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long userId;
 

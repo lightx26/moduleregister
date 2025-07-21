@@ -35,7 +35,7 @@ public class UserDomainMapper implements DomainMapper<User, UserEntity> {
     @Override
     public List<User> toDomain(List<UserEntity> entities) {
         if (entities == null || entities.isEmpty()) {
-            return null;
+            return List.of();
         }
         return entities.stream()
                 .map(this::toDomain)

@@ -7,6 +7,7 @@ import com.pet.moduleregister.application.auth.ports.out.AuthTokenRepositoryPort
 import com.pet.moduleregister.application.auth.ports.out.TokenServicePort;
 import com.pet.moduleregister.application.auth.ports.out.dto.AuthTokenDTO;
 import com.pet.moduleregister.application.shared.exceptions.NotFoundException;
+import com.pet.moduleregister.application.user.ports.in.GetUserUsecase;
 import com.pet.moduleregister.application.user.ports.out.UserRepositoryPort;
 import com.pet.moduleregister.domain.user.User;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ import java.time.Instant;
 @RequiredArgsConstructor
 public class LoginUsecaseImpl implements LoginUsecase {
 
-    private final UserRepositoryPort userRepositoryPort;
+    private final GetUserUsecase getUserUsecase;
     private final AuthTokenRepositoryPort authTokenRepositoryPort;
     private final TokenServicePort tokenServicePort;
     private final PasswordEncoder passwordEncoder;
@@ -30,10 +31,14 @@ public class LoginUsecaseImpl implements LoginUsecase {
         String userCode = loginData.userCode();
         String password = loginData.password();
 
-        User user = userRepositoryPort.findByCode(userCode)
-                .orElseThrow(() -> new NotFoundException("Invalid userCode or password"));
+        User user;
+        try {
+            user = getUserUsecase.getUserByCode(userCode);
+        } catch (NotFoundException ignored) {
+            user = null;
+        }
 
-        if (!passwordEncoder.matches(password, user.getPassword())) {
+        if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
             throw new IllegalArgumentException("Invalid userCode or password");
         }
 
