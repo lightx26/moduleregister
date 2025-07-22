@@ -60,4 +60,10 @@ public class UserEntity {
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+    @Column(name = "cohort_id")
+    private Long cohortId;
+
+    @Column(name = "student_group_id")
+    private Long studentGroupId;
 }

@@ -17,8 +17,8 @@ public class SemesterEntity {
     @Column(name = "semester_id")
     private Long semesterId;
 
-    @Column(name = "name", unique = true)
-    private String name;
+    @Column(name = "semester_name", unique = true)
+    private String semesterName;
 
     @Column(name = "order_in_year")
     private int orderInYear;

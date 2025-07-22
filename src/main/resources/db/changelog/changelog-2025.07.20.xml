@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="4_create_semester" author="Quang Nguyen">
+        <sql>
+            CREATE TABLE IF NOT EXISTS semester (
+                semester_id BIGSERIAL PRIMARY KEY,
+                semester_name VARCHAR(50) NOT NULL UNIQUE,
+                order_in_year INT NOT NULL,
+                start_date DATE NOT NULL,
+                end_date DATE NOT NULL,
+                is_active BOOLEAN NOT NULL DEFAULT FALSE,
+
+                created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+             );
+        </sql>
+    </changeSet>
+
+    <changeSet id="5_create_registration_period" author="Quang Nguyen">
+        <sql>
+            CREATE TABLE IF NOT EXISTS registration_period (
+                registration_period_id BIGSERIAL PRIMARY KEY,
+                semester_id BIGINT NOT NULL,
+                start_time TIMESTAMP WITH TIME ZONE NOT NULL,
+                end_time TIMESTAMP WITH TIME ZONE NOT NULL,
+                type VARCHAR(20) NOT NULL,
+
+                created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+                CONSTRAINT fk_registration_period_semester FOREIGN KEY (semester_id)
+                REFERENCES semester(semester_id)
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>

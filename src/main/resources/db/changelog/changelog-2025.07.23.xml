@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="10_create_student_cohort" author="Quang Nguyen">
+        <sql>
+            CREATE TABLE IF NOT EXISTS student_cohort (
+                student_cohort_id BIGSERIAL PRIMARY KEY,
+                cohort_name VARCHAR(20) NOT NULL UNIQUE,
+                entry_year INT NOT NULL,
+                degree_program VARCHAR(50) NOT NULL,
+                created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+                CONSTRAINT unique_student_cohort_ey_dg UNIQUE (entry_year, degree_program)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="11_create_student_group" author="Quang Nguyen">
+        <sql>
+            CREATE TABLE IF NOT EXISTS student_group (
+                student_group_id BIGSERIAL PRIMARY KEY,
+                group_name VARCHAR(20) NOT NULL UNIQUE,
+                faculty_id BIGINT NOT NULL,
+                student_cohort_id BIGINT NOT NULL,
+
+                created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+                CONSTRAINT fk_student_group_student_cohort FOREIGN KEY (student_cohort_id)
+                REFERENCES student_cohort(student_cohort_id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="12_add_cohort_student_group_to_user" author="Quang Nguyen">
+        <addColumn tableName="user">
+            <column name="cohort_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="student_group_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+
+        <addForeignKeyConstraint
+            baseTableName="user"
+            baseColumnNames="cohort_id"
+            constraintName="fk_user_cohort"
+            referencedTableName="student_cohort"
+            referencedColumnNames="student_cohort_id"
+        />
+
+        <addForeignKeyConstraint
+            baseTableName="user"
+            baseColumnNames="student_group_id"
+            constraintName="fk_user_student_group"
+            referencedTableName="student_group"
+            referencedColumnNames="student_group_id"
+        />
+    </changeSet>
+</databaseChangeLog>

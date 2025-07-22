@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Semester {
     private Long semesterId;
-    private String name;
+    private String semesterName;
     private int orderInYear;
     private LocalDate startDate;
     private LocalDate endDate;

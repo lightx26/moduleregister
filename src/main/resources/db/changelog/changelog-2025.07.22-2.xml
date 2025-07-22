@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="9_create_elective_module" author="Quang Nguyen">
+        <sql>
+            CREATE TABLE IF NOT EXISTS elective_module (
+                elective_module_id BIGSERIAL PRIMARY KEY,
+                module_id BIGINT NOT NULL,
+                elective_group_id BIGINT NOT NULL,
+
+                created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+                CONSTRAINT fk_elective_module_module FOREIGN KEY (module_id)
+                REFERENCES module(module_id),
+
+                CONSTRAINT fk_elective_module_elective_group FOREIGN KEY (elective_group_id)
+                REFERENCES elective_group(elective_group_id),
+
+                CONSTRAINT unique_elective_module UNIQUE (module_id, elective_group_id)
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>

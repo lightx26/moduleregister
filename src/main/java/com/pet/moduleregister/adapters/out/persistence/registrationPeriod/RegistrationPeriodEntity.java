@@ -27,6 +27,7 @@ public class RegistrationPeriodEntity {
     private Instant endTime;
 
     @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     private RegistrationType type;
 
     @Column(name = "created_at")

@@ -1,6 +1,8 @@
 package com.pet.moduleregister.adapters.in.web.semester;
 
+import com.pet.moduleregister.adapters.in.web.semester.facade.SemesterFacade;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,9 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/semesters")
 @RequiredArgsConstructor
 public class SemesterController {
+    private final SemesterFacade semesterFacade;
     @PatchMapping("/current-semester")
-    public void setCurrentSemester(Long semesterId) {
-        // This method will be implemented later to set the current semester
-        // using the SetCurrentSemesterUsecase.
+    public ResponseEntity<?> setCurrentSemester(Long semesterId) {
+        semesterFacade.setCurrentSemester(semesterId);
+        return ResponseEntity.ok().build();
     }
 }

@@ -10,7 +10,7 @@ import java.time.Instant;
 public class Module {
     private Long moduleId;
     private String moduleCode;
-    private String name;
+    private String moduleName;
     private int numberOfCredits;
     private boolean isCompulsory;
     private Long responsibleFaculty;

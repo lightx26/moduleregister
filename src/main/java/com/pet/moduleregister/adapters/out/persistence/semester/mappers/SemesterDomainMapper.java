@@ -16,7 +16,7 @@ public class SemesterDomainMapper implements DomainMapper<Semester, SemesterEnti
         }
         return new Semester(
                 entity.getSemesterId(),
-                entity.getName(),
+                entity.getSemesterName(),
                 entity.getOrderInYear(),
                 entity.getStartDate(),
                 entity.getEndDate(),

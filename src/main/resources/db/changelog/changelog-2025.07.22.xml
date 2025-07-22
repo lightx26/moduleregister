@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="6_create_elective_group" author="Quang Nguyen">
+        <sql>
+            CREATE TABLE IF NOT EXISTS elective_group (
+                elective_group_id BIGSERIAL PRIMARY KEY,
+                group_code VARCHAR(50) NOT NULL UNIQUE,
+                min_modules INT NOT NULL,
+
+                created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="7_create_module" author="Quang Nguyen">
+        <sql>
+            CREATE TABLE IF NOT EXISTS module (
+                module_id BIGSERIAL PRIMARY KEY,
+                module_code VARCHAR(50) NOT NULL UNIQUE,
+                module_name VARCHAR(100) NOT NULL,
+                number_of_credits INT NOT NULL,
+                is_compulsory BOOLEAN NOT NULL DEFAULT TRUE,
+                responsible_faculty BIGINT NOT NULL,
+
+                created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="8_create_module_class" author="Quang Nguyen">
+        <sql>
+            CREATE TABLE IF NOT EXISTS module_class (
+                module_class_id BIGSERIAL PRIMARY KEY,
+                module_class_code VARCHAR(50) NOT NULL UNIQUE,
+                max_participants INT NOT NULL,
+
+                start_date DATE NOT NULL,
+                end_date DATE NOT NULL,
+
+                semester_id BIGINT NOT NULL,
+                module_id BIGINT NOT NULL,
+                lecturer_id BIGINT NOT NULL,
+
+                created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+                CONSTRAINT fk_module_class_module FOREIGN KEY (module_id)
+                REFERENCES module(module_id),
+
+                CONSTRAINT fk_module_class_semester FOREIGN KEY (semester_id)
+                REFERENCES semester(semester_id),
+
+                CONSTRAINT fk_module_class_lecturer FOREIGN KEY (lecturer_id)
+                REFERENCES "user"(user_id)
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>

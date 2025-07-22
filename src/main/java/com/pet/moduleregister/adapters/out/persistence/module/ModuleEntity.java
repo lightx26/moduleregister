@@ -19,8 +19,8 @@ public class ModuleEntity {
     @Column(name = "module_code", unique = true)
     private String moduleCode;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "module_name")
+    private String moduleName;
 
     @Column(name = "number_of_credits")
     private int numberOfCredits;

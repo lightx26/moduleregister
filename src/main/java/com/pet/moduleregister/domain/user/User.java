@@ -12,6 +12,7 @@ import java.time.LocalDate;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class User {
     // Account information
     private Long userId;
