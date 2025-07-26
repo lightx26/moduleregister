@@ -63,4 +63,23 @@
             referencedColumnNames="student_group_id"
         />
     </changeSet>
+
+    <changeSet id="13_create_class_schedule" author="Quang Nguyen">
+        <sql>
+            CREATE TABLE IF NOT EXISTS class_schedule (
+                class_schedule_id BIGSERIAL PRIMARY KEY,
+                module_class_id BIGINT NOT NULL,
+                day_of_week INTEGER NOT NULL,
+                start_period INTEGER NOT NULL,
+                end_period INTEGER NOT NULL,
+                room VARCHAR(20) NOT NULL,
+                created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+                CONSTRAINT fk_class_schedule_module_class FOREIGN KEY (module_class_id)
+                REFERENCES module_class(module_class_id)
+                ON DELETE CASCADE
+            );
+        </sql>
+    </changeSet>
 </databaseChangeLog>

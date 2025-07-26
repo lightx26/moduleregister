@@ -1,9 +1,9 @@
 package com.pet.moduleregister.application.moduleClass.ports.in;
 
-import com.pet.moduleregister.domain.moduleClass.ModuleClass;
+import com.pet.moduleregister.application.moduleClass.dto.OpeningClass;
+import org.springframework.data.domain.Slice;
 
-import java.util.List;
 
 public interface GetOpeningModuleClassesUsecase {
-    List<ModuleClass> getOpeningModuleClasses();
+    Slice<OpeningClass> getOpeningModuleClasses(int limit);
 }

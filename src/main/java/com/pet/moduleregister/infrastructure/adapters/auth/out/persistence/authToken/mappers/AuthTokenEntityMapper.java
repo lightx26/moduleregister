@@ -1,0 +1,35 @@
+package com.pet.moduleregister.infrastructure.adapters.auth.out.persistence.authToken.mappers;
+
+import com.pet.moduleregister.infrastructure.adapters.auth.out.persistence.authToken.AuthTokenEntity;
+import com.pet.moduleregister.infrastructure.adapters.shared.out.mapper.EntityMapper;
+import com.pet.moduleregister.application.auth.ports.out.dto.AuthTokenDTO;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+@Component
+public class AuthTokenEntityMapper implements EntityMapper<AuthTokenDTO, AuthTokenEntity> {
+    @Override
+    public AuthTokenEntity toEntity(AuthTokenDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+        return AuthTokenEntity.builder()
+                .authTokenId(Long.parseLong(dto.getAuthTokenId()))
+                .userId(dto.getUserId())
+                .refreshToken(dto.getRefreshToken())
+                .createdAt(dto.getCreatedAt())
+                .updatedAt(dto.getUpdatedAt())
+                .build();
+    }
+
+    @Override
+    public List<AuthTokenEntity> toEntity(List<AuthTokenDTO> dtos) {
+        if (dtos == null || dtos.isEmpty()) {
+            return List.of();
+        }
+        return dtos.stream()
+                .map(this::toEntity)
+                .toList();
+    }
+}

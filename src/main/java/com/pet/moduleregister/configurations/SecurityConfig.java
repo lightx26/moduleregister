@@ -1,7 +1,7 @@
 package com.pet.moduleregister.configurations;
 
-import com.pet.moduleregister.adapters.in.web.shared.security.CustomAuthenticationEntryPoint;
-import com.pet.moduleregister.adapters.in.web.shared.security.JwtAuthenticationFilter;
+import com.pet.moduleregister.infrastructure.adapters.shared.in.web.security.CustomAuthenticationEntryPoint;
+import com.pet.moduleregister.infrastructure.adapters.shared.in.web.security.JwtAuthenticationFilter;
 import com.pet.moduleregister.application.auth.ports.out.TokenBlackListPort;
 import com.pet.moduleregister.application.auth.ports.out.TokenServicePort;
 import com.pet.moduleregister.application.user.ports.out.UserRepositoryPort;
