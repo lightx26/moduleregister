@@ -20,5 +20,5 @@ public abstract class PageResponse<T> {
     @JsonProperty("isLast")
     private boolean isLast;
 
-    private boolean numberOfElements;
+    private int numberOfElements;
 }

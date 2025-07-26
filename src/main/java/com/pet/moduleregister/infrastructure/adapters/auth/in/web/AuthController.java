@@ -1,7 +1,6 @@
 package com.pet.moduleregister.infrastructure.adapters.auth.in.web;
 
 import com.pet.moduleregister.infrastructure.adapters.auth.in.web.dto.request.LoginParams;
-import com.pet.moduleregister.infrastructure.adapters.auth.in.web.dto.request.RefreshParams;
 import com.pet.moduleregister.infrastructure.adapters.auth.in.web.facade.AuthFacade;
 import com.pet.moduleregister.infrastructure.adapters.shared.in.web.dto.response.ErrorResponse;
 import com.pet.moduleregister.infrastructure.adapters.shared.in.web.dto.response.MessageResponse;

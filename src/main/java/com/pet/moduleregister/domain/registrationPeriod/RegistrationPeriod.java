@@ -3,10 +3,14 @@ package com.pet.moduleregister.domain.registrationPeriod;
 import com.pet.moduleregister.domain.registrationPeriod.enums.RegistrationType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.Instant;
 
 @Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class RegistrationPeriod {
     private Long registrationPeriodId;

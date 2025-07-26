@@ -5,5 +5,5 @@ public enum LearnStatus {
     WAITING_LIST,
     LEARNING,
     COMPLETED,
-    DROPPED;
+    DROPPED
 }

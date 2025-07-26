@@ -15,6 +15,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Repository;
 
 import java.time.DayOfWeek;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -115,7 +116,7 @@ public class ModuleClassRepositoryAdapter implements ModuleClassRepositoryPort {
                 """;
 
         TypedQuery<Tuple> query = entityManager.createQuery(jpql, Tuple.class);
-        query.setParameter("moduleClassIds", moduleClassIds);
+        query.setParameter("moduleClassIds", Arrays.asList(moduleClassIds));
 
         return query.getResultList().stream().map(
                 result -> new Schedule(

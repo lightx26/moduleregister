@@ -50,7 +50,8 @@ public class SecurityConfig {
                     authorize.requestMatchers(
                         "v1/health-check",
                         "v1/auth/login",
-                        "v1/auth/refresh"
+                        "v1/auth/refresh",
+                        "v1/module-classes/opening-classes"
                     )
                     .permitAll();
                     authorize.anyRequest().authenticated();

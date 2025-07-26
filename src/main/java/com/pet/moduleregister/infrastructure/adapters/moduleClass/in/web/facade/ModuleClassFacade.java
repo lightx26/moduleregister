@@ -4,5 +4,5 @@ import com.pet.moduleregister.infrastructure.adapters.moduleClass.in.web.dto.res
 import com.pet.moduleregister.infrastructure.adapters.shared.in.web.dto.response.pagination.CursorPageResponse;
 
 public interface ModuleClassFacade {
-    CursorPageResponse<OpeningClass, Long> getOpeningModuleClasses(int limit);
+    CursorPageResponse<OpeningClass, Long> getOpeningModuleClasses(Long cursor, int limit);
 }

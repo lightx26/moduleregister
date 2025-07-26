@@ -13,7 +13,7 @@ import java.util.List;
 public class ModuleClassFacadeImpl implements ModuleClassFacade {
     private final GetOpeningModuleClassesUsecase getOpeningModuleClassesUsecase;
     @Override
-    public CursorPageResponse<OpeningClass, Long> getOpeningModuleClasses(int limit) {
+    public CursorPageResponse<OpeningClass, Long> getOpeningModuleClasses(Long cursor, int limit) {
         var openingClassesSlice = getOpeningModuleClassesUsecase.getOpeningModuleClasses(limit);
 
         List<OpeningClass> openingClasses = openingClassesSlice.getContent()
@@ -24,7 +24,11 @@ public class ModuleClassFacadeImpl implements ModuleClassFacade {
         return CursorPageResponse
                 .<OpeningClass, Long>builder()
                 .content(openingClasses)
+                .isFirst(cursor == null)
+                .isLast(openingClassesSlice.isLast())
+                .numberOfElements(openingClassesSlice.getNumberOfElements())
                 .cursor(null)
+                .size(limit)
                 .nextCursor(null)
                 .build();
     }
