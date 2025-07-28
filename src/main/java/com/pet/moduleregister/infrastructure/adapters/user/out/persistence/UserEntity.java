@@ -1,8 +1,8 @@
 package com.pet.moduleregister.infrastructure.adapters.user.out.persistence;
 
-import com.pet.moduleregister.domain.user.enums.AccountStatus;
-import com.pet.moduleregister.domain.user.enums.Gender;
-import com.pet.moduleregister.domain.user.enums.UserRole;
+import com.pet.moduleregister.entities.user.enums.AccountStatus;
+import com.pet.moduleregister.entities.user.enums.Gender;
+import com.pet.moduleregister.entities.user.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

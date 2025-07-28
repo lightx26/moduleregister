@@ -2,7 +2,7 @@ package com.pet.moduleregister.infrastructure.adapters.semester.out.persistence;
 
 import com.pet.moduleregister.infrastructure.adapters.semester.out.persistence.mappers.SemesterDomainMapper;
 import com.pet.moduleregister.application.semester.ports.out.SemesterRepositoryPort;
-import com.pet.moduleregister.domain.semester.Semester;
+import com.pet.moduleregister.entities.semester.Semester;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;

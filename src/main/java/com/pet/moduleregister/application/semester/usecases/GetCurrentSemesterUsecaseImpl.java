@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pet.moduleregister.application.semester.ports.in.GetCurrentSemesterUsecase;
 import com.pet.moduleregister.application.semester.ports.out.SemesterRepositoryPort;
 import com.pet.moduleregister.application.shared.exceptions.NotFoundException;
-import com.pet.moduleregister.domain.semester.Semester;
+import com.pet.moduleregister.entities.semester.Semester;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;

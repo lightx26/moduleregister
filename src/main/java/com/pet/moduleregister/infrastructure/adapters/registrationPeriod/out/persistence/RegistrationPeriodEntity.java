@@ -1,6 +1,6 @@
 package com.pet.moduleregister.infrastructure.adapters.registrationPeriod.out.persistence;
 
-import com.pet.moduleregister.domain.registrationPeriod.enums.RegistrationType;
+import com.pet.moduleregister.entities.registrationPeriod.enums.RegistrationType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,6 @@
 package com.pet.moduleregister.application.semester.ports.out;
 
-import com.pet.moduleregister.domain.semester.Semester;
+import com.pet.moduleregister.entities.semester.Semester;
 
 import java.util.Optional;
 

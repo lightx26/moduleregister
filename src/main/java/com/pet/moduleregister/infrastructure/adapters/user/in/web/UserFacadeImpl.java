@@ -3,7 +3,7 @@ package com.pet.moduleregister.infrastructure.adapters.user.in.web;
 import com.pet.moduleregister.infrastructure.adapters.shared.in.web.exceptions.UnauthorizedException;
 import com.pet.moduleregister.infrastructure.adapters.shared.in.web.security.AuthUtils;
 import com.pet.moduleregister.infrastructure.adapters.user.in.web.dto.response.CurrentUserResponse;
-import com.pet.moduleregister.domain.user.User;
+import com.pet.moduleregister.entities.user.User;
 import org.springframework.stereotype.Component;
 
 @Component

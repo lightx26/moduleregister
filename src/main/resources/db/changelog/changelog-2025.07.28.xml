@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="15_create_program" author="Quang Nguyen">
+        <sql>
+            CREATE TABLE program (
+                program_id BIGSERIAL PRIMARY KEY,
+                program_code VARCHAR(50) NOT NULL UNIQUE,
+                program_name VARCHAR(255) NOT NULL UNIQUE,
+                number_of_semesters INT NOT NULL,
+                total_credits INT NOT NULL,
+                compulsory_credits INT NOT NULL,
+                responsible_faculty BIGINT NOT NULL,
+                language VARCHAR(50) NOT NULL,
+                start_date DATE NOT NULL,
+                end_date DATE NOT NULL,
+                is_active BOOLEAN NOT NULL DEFAULT TRUE,
+                created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="16_create_program_module" author="Quang Nguyen">
+        <sql>
+            CREATE TABLE program_module (
+                program_module_id BIGSERIAL PRIMARY KEY,
+                program_id BIGINT NOT NULL,
+                module_id BIGINT,
+                elective_group_id BIGINT,
+                semester_order INT NOT NULL,
+
+                created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+                CONSTRAINT fk_program_module_program FOREIGN KEY (program_id)
+                    REFERENCES program(program_id),
+
+                CONSTRAINT fk_program_module_module FOREIGN KEY (module_id)
+                    REFERENCES module(module_id),
+
+                CONSTRAINT fk_program_module_elective_group FOREIGN KEY (elective_group_id)
+                    REFERENCES elective_group(elective_group_id),
+
+                CHECK (
+                    (module_id IS NOT NULL AND elective_group_id IS NULL)
+                        OR
+                    (module_id IS NULL AND elective_group_id IS NOT NULL)
+                    )
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="17_drop_column_is_compulsory_module" author="Quang Nguyen">
+        <dropColumn tableName="module" columnName="is_compulsory"/>
+    </changeSet>
+</databaseChangeLog>

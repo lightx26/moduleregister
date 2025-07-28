@@ -5,13 +5,12 @@ import com.pet.moduleregister.application.moduleClass.dto.OpeningClass;
 import com.pet.moduleregister.application.moduleClass.dto.Schedule;
 import com.pet.moduleregister.infrastructure.adapters.moduleClass.out.persistence.mappers.ModuleClassDomainMapper;
 import com.pet.moduleregister.application.moduleClass.ports.out.ModuleClassRepositoryPort;
-import com.pet.moduleregister.domain.moduleClass.ModuleClass;
+import com.pet.moduleregister.entities.moduleClass.ModuleClass;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Tuple;
 import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Repository;
 
 import java.time.DayOfWeek;
@@ -52,7 +51,7 @@ public class ModuleClassRepositoryAdapter implements ModuleClassRepositoryPort {
                 FROM ModuleClassEntity mc
                 JOIN ModuleEntity m ON mc.moduleId = m.moduleId
                 JOIN UserEntity u ON mc.lecturerId = u.userId
-                JOIN ModuleClassStudentEntity mcs ON mc.moduleClassId = mcs.moduleClassId
+                LEFT JOIN ModuleClassStudentEntity mcs ON mc.moduleClassId = mcs.moduleClassId
                 WHERE mc.semesterId = :semesterId
                 GROUP BY mc.moduleClassId, mc.moduleClassCode,
                     m.moduleName, m.numberOfCredits,
@@ -100,8 +99,7 @@ public class ModuleClassRepositoryAdapter implements ModuleClassRepositoryPort {
                             currentParticipants
                     );
                 }
-        ).toList(
-        ) ;
+        ).toList();
     }
 
     private List<Schedule> getSchedulesByModuleClassIds(Long... moduleClassIds) {

@@ -1,7 +1,7 @@
 package com.pet.moduleregister.application.moduleClass.ports.out;
 
 import com.pet.moduleregister.application.moduleClass.dto.OpeningClass;
-import com.pet.moduleregister.domain.moduleClass.ModuleClass;
+import com.pet.moduleregister.entities.moduleClass.ModuleClass;
 
 import java.util.List;
 

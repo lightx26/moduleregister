@@ -1,6 +1,6 @@
 package com.pet.moduleregister.application.moduleClass.ports.in;
 
-import com.pet.moduleregister.domain.moduleClass.ModuleClass;
+import com.pet.moduleregister.entities.moduleClass.ModuleClass;
 
 import java.util.List;
 

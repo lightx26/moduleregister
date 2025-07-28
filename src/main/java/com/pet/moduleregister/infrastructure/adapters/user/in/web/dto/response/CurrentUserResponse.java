@@ -1,7 +1,7 @@
 package com.pet.moduleregister.infrastructure.adapters.user.in.web.dto.response;
 
-import com.pet.moduleregister.domain.user.enums.Gender;
-import com.pet.moduleregister.domain.user.enums.UserRole;
+import com.pet.moduleregister.entities.user.enums.Gender;
+import com.pet.moduleregister.entities.user.enums.UserRole;
 import lombok.Builder;
 import lombok.Getter;
 

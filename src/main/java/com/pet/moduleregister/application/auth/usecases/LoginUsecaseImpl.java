@@ -8,7 +8,7 @@ import com.pet.moduleregister.application.auth.ports.out.TokenServicePort;
 import com.pet.moduleregister.application.auth.ports.out.dto.AuthTokenDTO;
 import com.pet.moduleregister.application.shared.exceptions.NotFoundException;
 import com.pet.moduleregister.application.user.ports.in.GetUserUsecase;
-import com.pet.moduleregister.domain.user.User;
+import com.pet.moduleregister.entities.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

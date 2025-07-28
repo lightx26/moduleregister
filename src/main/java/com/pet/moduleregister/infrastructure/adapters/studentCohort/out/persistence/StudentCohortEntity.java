@@ -1,6 +1,6 @@
 package com.pet.moduleregister.infrastructure.adapters.studentCohort.out.persistence;
 
-import com.pet.moduleregister.domain.studentCohort.enums.DegreeProgram;
+import com.pet.moduleregister.entities.studentCohort.enums.DegreeProgram;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

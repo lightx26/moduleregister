@@ -6,7 +6,7 @@ import com.pet.moduleregister.application.moduleClass.dto.OpeningClass;
 import com.pet.moduleregister.application.moduleClass.ports.out.ModuleClassRepositoryPort;
 import com.pet.moduleregister.application.registrationPeriod.ports.in.GetCurrentPeriodUsecase;
 import com.pet.moduleregister.application.shared.exceptions.NotFoundException;
-import com.pet.moduleregister.domain.registrationPeriod.RegistrationPeriod;
+import com.pet.moduleregister.entities.registrationPeriod.RegistrationPeriod;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;

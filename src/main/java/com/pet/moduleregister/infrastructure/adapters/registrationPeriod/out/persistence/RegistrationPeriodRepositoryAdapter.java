@@ -2,7 +2,7 @@ package com.pet.moduleregister.infrastructure.adapters.registrationPeriod.out.pe
 
 import com.pet.moduleregister.infrastructure.adapters.registrationPeriod.out.persistence.mappers.RegistrationPeriodDomainMapper;
 import com.pet.moduleregister.application.registrationPeriod.ports.out.RegistrationPeriodRepositoryPort;
-import com.pet.moduleregister.domain.registrationPeriod.RegistrationPeriod;
+import com.pet.moduleregister.entities.registrationPeriod.RegistrationPeriod;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

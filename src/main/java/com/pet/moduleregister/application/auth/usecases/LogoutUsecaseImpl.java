@@ -6,7 +6,7 @@ import com.pet.moduleregister.application.auth.ports.out.AuthTokenRepositoryPort
 import com.pet.moduleregister.application.auth.ports.out.TokenBlackListPort;
 import com.pet.moduleregister.application.auth.ports.out.TokenServicePort;
 import com.pet.moduleregister.application.auth.ports.out.dto.AuthTokenDTO;
-import com.pet.moduleregister.domain.user.User;
+import com.pet.moduleregister.entities.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

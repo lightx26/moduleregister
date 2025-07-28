@@ -8,7 +8,7 @@ import com.pet.moduleregister.application.auth.ports.in.RefreshUsecase;
 import com.pet.moduleregister.application.auth.ports.in.dto.LoginDataDTO;
 import com.pet.moduleregister.application.auth.ports.in.dto.LoginResultDTO;
 import com.pet.moduleregister.application.auth.ports.in.dto.LogoutDataDTO;
-import com.pet.moduleregister.domain.user.User;
+import com.pet.moduleregister.entities.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

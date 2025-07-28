@@ -2,7 +2,7 @@ package com.pet.moduleregister.infrastructure.adapters.moduleClass.out.persisten
 
 import com.pet.moduleregister.infrastructure.adapters.moduleClass.out.persistence.ModuleClassEntity;
 import com.pet.moduleregister.infrastructure.adapters.shared.out.mapper.DomainMapper;
-import com.pet.moduleregister.domain.moduleClass.ModuleClass;
+import com.pet.moduleregister.entities.moduleClass.ModuleClass;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

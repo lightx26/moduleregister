@@ -2,7 +2,7 @@ package com.pet.moduleregister.infrastructure.adapters.semester.out.persistence.
 
 import com.pet.moduleregister.infrastructure.adapters.semester.out.persistence.SemesterEntity;
 import com.pet.moduleregister.infrastructure.adapters.shared.out.mapper.DomainMapper;
-import com.pet.moduleregister.domain.semester.Semester;
+import com.pet.moduleregister.entities.semester.Semester;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

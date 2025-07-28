@@ -1,6 +1,6 @@
 package com.pet.moduleregister.application.registrationPeriod.ports.out;
 
-import com.pet.moduleregister.domain.registrationPeriod.RegistrationPeriod;
+import com.pet.moduleregister.entities.registrationPeriod.RegistrationPeriod;
 
 import java.time.Instant;
 import java.util.Optional;

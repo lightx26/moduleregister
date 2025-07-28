@@ -1,6 +1,6 @@
 package com.pet.moduleregister.infrastructure.adapters.moduleClassStudent.out.persistence;
 
-import com.pet.moduleregister.domain.moduleClassStudent.enums.LearnStatus;
+import com.pet.moduleregister.entities.moduleClassStudent.enums.LearnStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

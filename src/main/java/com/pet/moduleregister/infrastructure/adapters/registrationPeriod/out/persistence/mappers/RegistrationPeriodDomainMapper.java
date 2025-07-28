@@ -2,7 +2,7 @@ package com.pet.moduleregister.infrastructure.adapters.registrationPeriod.out.pe
 
 import com.pet.moduleregister.infrastructure.adapters.registrationPeriod.out.persistence.RegistrationPeriodEntity;
 import com.pet.moduleregister.infrastructure.adapters.shared.out.mapper.DomainMapper;
-import com.pet.moduleregister.domain.registrationPeriod.RegistrationPeriod;
+import com.pet.moduleregister.entities.registrationPeriod.RegistrationPeriod;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

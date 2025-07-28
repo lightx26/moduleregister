@@ -2,7 +2,7 @@ package com.pet.moduleregister.application.user.usecases;
 
 import com.pet.moduleregister.application.shared.exceptions.NotFoundException;
 import com.pet.moduleregister.application.user.ports.out.UserRepositoryPort;
-import com.pet.moduleregister.domain.user.User;
+import com.pet.moduleregister.entities.user.User;
 import com.pet.moduleregister.application.user.ports.in.GetUserUsecase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
