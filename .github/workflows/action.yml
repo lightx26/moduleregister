@@ -8,9 +8,9 @@ on:
 
 jobs:
   build:
-    uses: ./ci-workflow.yml
+    uses: ./.github/workflows/ci-workflow.yml
     secrets: inherit
   deploy:
     needs: build
-    uses: ./cd-workflow.yml
+    uses: ./.github/workflows/cd-workflow.yml
     secrets: inherit
