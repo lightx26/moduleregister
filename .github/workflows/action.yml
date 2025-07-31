@@ -1,0 +1,16 @@
+name: Index workflow
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./ci-workflow.yml
+    secrets: inherit
+  deploy:
+    needs: build
+    uses: ./cd-workflow.yml
+    secrets: inherit

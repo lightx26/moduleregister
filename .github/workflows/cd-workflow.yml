@@ -1,0 +1,77 @@
+name: CD Phase - Pull and Deploy Docker Image
+
+on: workflow_call
+
+jobs:
+  pull-and-run:
+    runs-on: ubuntu-latest
+
+    env:
+      IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/moduleregister
+      DATASOURCE_URL: ${{ secrets.DATASOURCE_URL }}
+      BACKEND_PORT: ${{ secrets.BACKEND_PORT }}
+      DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
+      DATABASE_USER: ${{ secrets.DATABASE_USER }}
+      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+      REDIS_HOST: ${{ secrets.REDIS_HOST }}
+      REDIS_PORT: ${{ secrets.REDIS_PORT }}
+      CORS_ORIGINS: ${{ secrets.CORS_ORIGINS }}
+      JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+      JWT_AT_EXPIRY: ${{ secrets.JWT_AT_EXPIRY }}
+      JWT_RT_EXPIRY: ${{ secrets.JWT_RT_EXPIRY }}
+
+    steps:
+      - name: Setup SSH Key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Generate image tag
+        id: vars
+        run: |
+          SHORT_SHA=${GITHUB_SHA::7}
+          echo "tag=${SHORT_SHA}" >> $GITHUB_OUTPUT
+
+      - name: SSH to deploy backend server
+        env:
+          IMAGE_NAME: ${{ env.IMAGE_NAME }}
+          SHA: ${{ steps.vars.outputs.tag }}
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.RUNNER_USERNAME }}@${{ secrets.SERVER_HOST }} <<EOF
+            cd moduleregister-app
+          
+            echo "Creating .env for docker-compose"
+            touch .env
+            echo "IMAGE_NAME=${{ env.IMAGE_NAME }}" >> .env
+            echo "SHA=${{ env.SHA }}" >> .env
+            echo "BACKEND_PORT=${{ env.BACKEND_PORT }}" >> .env
+            echo "DATABASE_PORT=${{ env.DATABASE_PORT }}" >> .env
+            echo "POSTGRES_USER=${{ env.DATABASE_USER }}" >> .env
+            echo "POSTGRES_PASSWORD=${{ env.DATABASE_PASSWORD }}" >> .env
+            echo "REDIS_HOST=${{ env.REDIS_HOST }}" >> .env
+            echo "REDIS_PORT=${{ env.REDIS_PORT }}" >> .env
+
+            echo "Creating .env.prod"
+            touch .env.prod
+            echo "SERVER_PORT=${{ env.BACKEND_PORT }}" >> .env.prod
+            echo "SPRING_DATASOURCE_URL=${{ env.DATASOURCE_URL }}" >> .env.prod
+            echo "SPRING_DATASOURCE_USERNAME=${{ env.DATABASE_USER }}" >> .env.prod
+            echo "SPRING_DATASOURCE_PASSWORD=${{ env.DATABASE_PASSWORD }}" >> .env.prod
+            echo "SPRING_DATA_REDIS_HOST=${{ env.REDIS_HOST }}" >> .env.prod
+            echo "SPRING_DATA_REDIS_PORT=${{ env.REDIS_PORT }}" >> .env.prod
+            echo "MODULEREGISTER_JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}" >> .env.prod
+            echo "MODULEREGISTER_JWT_EXPIRY_ACCESS_TOKEN=${{ secrets.JWT_AT_EXPIRY }}" >> .env.prod
+            echo "MODULEREGISTER_JWT_EXPIRY_REFRESH_TOKEN=${{ secrets.JWT_RT_EXPIRY }}" >> .env.prod
+
+            echo "Pulling latest backend image..."
+            docker compose pull backend
+
+            echo "Stopping old backend container..."
+            docker compose stop backend
+            docker compose rm -f backend
+
+            echo "Starting backend again..."
+            docker compose up -d backend
+
+            echo "Done."
+          EOF

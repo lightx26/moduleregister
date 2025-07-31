@@ -25,9 +25,6 @@ public class ModuleEntity {
     @Column(name = "number_of_credits")
     private int numberOfCredits;
 
-    @Column(name = "is_compulsory")
-    private boolean isCompulsory;
-
     @Column(name = "responsible_faculty")
     private Long responsibleFaculty;
 

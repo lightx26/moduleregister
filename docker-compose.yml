@@ -1,0 +1,47 @@
+services:
+  backend:
+    image: ${IMAGE_NAME}:${SHA}
+    env_file: .env
+    container_name: moduleregister_backend
+    ports:
+      - "${BACKEND_PORT}:8080"
+    depends_on:
+      - db
+      - redis
+    networks:
+      - moduleregister
+
+  db:
+    image: postgres:16
+    ports:
+      - "${DATABASE_PORT}:5432"
+    container_name: moduleregister_db
+    restart: always
+    environment:
+      POSTGRES_DB: moduleregister
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - moduleregister
+
+  redis:
+    image: redis:7.2.10-alpine
+    ports:
+      - "${REDIS_PORT}:6379"
+    container_name: moduleregister_redis
+    restart: always
+    networks:
+      - moduleregister
+
+volumes:
+  pgdata:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/lightx/moduleregister-data/postgres
+      o: bind
+
+networks:
+  moduleregister:
