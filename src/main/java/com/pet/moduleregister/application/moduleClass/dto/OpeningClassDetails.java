@@ -1,7 +1,6 @@
 package com.pet.moduleregister.application.moduleClass.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 

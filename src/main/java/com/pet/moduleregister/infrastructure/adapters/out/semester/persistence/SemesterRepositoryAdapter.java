@@ -4,7 +4,6 @@ import com.pet.moduleregister.infrastructure.adapters.out.semester.persistence.m
 import com.pet.moduleregister.application.semester.ports.out.SemesterRepositoryPort;
 import com.pet.moduleregister.entities.semester.Semester;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -16,7 +15,7 @@ public class SemesterRepositoryAdapter implements SemesterRepositoryPort {
 
     private final SemesterJpaRepository semesterJpaRepository;
     private final SemesterDomainMapper semesterDomainMapper;
-    private final RedisTemplate<String, String> redisTemplate;
+
     @Override
     public Optional<Semester> getCurrentSemester() {
         return semesterJpaRepository.findFirstByActive(true)

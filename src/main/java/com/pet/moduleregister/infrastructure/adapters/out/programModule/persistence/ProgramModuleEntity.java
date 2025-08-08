@@ -21,8 +21,8 @@ public class ProgramModuleEntity {
     @Column(name = "module_id")
     private Long moduleId;
     // Elective module only
-    @Column(name = "elective_group")
-    private Long electiveGroup;
+    @Column(name = "elective_group_id")
+    private Long electiveGroupId;
 
     @Column(name = "semester_order")
     private int semesterOrder;

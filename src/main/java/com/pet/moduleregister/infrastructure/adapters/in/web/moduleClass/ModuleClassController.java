@@ -1,9 +1,6 @@
 package com.pet.moduleregister.infrastructure.adapters.in.web.moduleClass;
 
-import com.pet.moduleregister.infrastructure.adapters.in.web._shared.exceptions.TypeMismatchException;
-import com.pet.moduleregister.infrastructure.adapters.in.web.moduleClass.dto.response.openingClass.OpeningClass;
 import com.pet.moduleregister.infrastructure.adapters.in.web.moduleClass.facade.ModuleClassFacade;
-import com.pet.moduleregister.infrastructure.adapters.in.web._shared.dto.response.pagination.CursorPageResponse;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;

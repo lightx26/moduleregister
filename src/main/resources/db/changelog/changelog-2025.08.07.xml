@@ -20,4 +20,8 @@
         />
 
     </changeSet>
+
+    <changeSet id="19_rename_cohort_id_student_group" author="Quang Nguyen">
+        <renameColumn tableName="student_group" oldColumnName="student_cohort_id" newColumnName="cohort_id" />
+    </changeSet>
 </databaseChangeLog>

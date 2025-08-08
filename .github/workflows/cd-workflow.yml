@@ -38,6 +38,7 @@ jobs:
           SHA: ${{ steps.vars.outputs.tag }}
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.RUNNER_USERNAME }}@${{ secrets.SERVER_HOST }} <<EOF
+            set -e
             cd moduleregister-app
           
             echo "Creating .env for docker-compose"

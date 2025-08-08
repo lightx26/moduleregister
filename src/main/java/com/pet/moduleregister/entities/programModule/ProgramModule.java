@@ -13,7 +13,7 @@ public class ProgramModule {
     // Compulsory module only
     private Long moduleId;
     // Elective module only
-    private Long electiveGroup;
+    private Long electiveGroupId;
     private int semesterOrder;
 
     private Instant createdAt;

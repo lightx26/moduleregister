@@ -2,7 +2,6 @@ package com.pet.moduleregister.infrastructure.adapters.in.web.moduleClass.dto.re
 
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 import java.util.List;
