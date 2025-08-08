@@ -1,7 +1,7 @@
 package com.pet.moduleregister.configurations;
 
-import com.pet.moduleregister.infrastructure.adapters.shared.in.web.security.CustomAuthenticationEntryPoint;
-import com.pet.moduleregister.infrastructure.adapters.shared.in.web.security.JwtAuthenticationFilter;
+import com.pet.moduleregister.infrastructure.adapters.in.web._shared.security.CustomAuthenticationEntryPoint;
+import com.pet.moduleregister.infrastructure.adapters.in.web._shared.security.JwtAuthenticationFilter;
 import com.pet.moduleregister.application.auth.ports.out.TokenBlackListPort;
 import com.pet.moduleregister.application.auth.ports.out.TokenServicePort;
 import com.pet.moduleregister.application.user.ports.out.UserRepositoryPort;
@@ -51,7 +51,8 @@ public class SecurityConfig {
                         "v1/health-check",
                         "v1/auth/login",
                         "v1/auth/refresh",
-                        "v1/module-classes/opening-classes"
+                        "v1/module-classes/opening-classes",
+                        "v1/module-classes/opening-classes/**"
                     )
                     .permitAll();
                     authorize.anyRequest().authenticated();

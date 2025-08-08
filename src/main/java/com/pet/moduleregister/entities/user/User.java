@@ -30,4 +30,8 @@ public class User {
     private Gender gender;
     private LocalDate dateOfBirth;
     private UserRole role;
+
+    private Long cohortId;
+    private Long studentGroupId;
+    private Long programId;
 }

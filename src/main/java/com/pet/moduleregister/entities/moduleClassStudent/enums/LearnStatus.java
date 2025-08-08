@@ -2,7 +2,7 @@ package com.pet.moduleregister.entities.moduleClassStudent.enums;
 
 public enum LearnStatus {
     REGISTERED,
-    WAITING_LIST,
+    WAITING,
     LEARNING,
     COMPLETED,
     DROPPED
