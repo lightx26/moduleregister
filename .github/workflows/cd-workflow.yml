@@ -43,7 +43,7 @@ jobs:
           
             echo "Creating .env for docker-compose"
             touch .env
-            echo "IMAGE_NAME=${{ env.IMAGE_NAME }}" >> .env
+            echo "IMAGE_NAME=${{ env.IMAGE_NAME }}" > .env
             echo "SHA=${{ env.SHA }}" >> .env
             echo "BACKEND_PORT=${{ env.BACKEND_PORT }}" >> .env
             echo "DATABASE_PORT=${{ env.DATABASE_PORT }}" >> .env
@@ -54,7 +54,7 @@ jobs:
 
             echo "Creating .env.prod"
             touch .env.prod
-            echo "SERVER_PORT=${{ env.BACKEND_PORT }}" >> .env.prod
+            echo "SERVER_PORT=${{ env.BACKEND_PORT }}" > .env.prod
             echo "SPRING_DATASOURCE_URL=${{ env.DATASOURCE_URL }}" >> .env.prod
             echo "SPRING_DATASOURCE_USERNAME=${{ env.DATABASE_USER }}" >> .env.prod
             echo "SPRING_DATASOURCE_PASSWORD=${{ env.DATABASE_PASSWORD }}" >> .env.prod
