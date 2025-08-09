@@ -28,6 +28,28 @@ public class ModuleClassRepositoryAdapter implements ModuleClassRepositoryPort {
     private EntityManager entityManager;
 
     @Override
+    public Optional<ModuleClass> findById(Long moduleClassId) {
+        return moduleClassJpaRepository.findById(moduleClassId)
+                .map(moduleClassDomainMapper::toDomain);
+    }
+
+    @Override
+    public boolean existsById(Long moduleClassId) {
+        return moduleClassJpaRepository.existsById(moduleClassId);
+    }
+
+    @Override
+    public Optional<ModuleClass> findByCode(String classCode) {
+        return moduleClassJpaRepository.findByModuleClassCode(classCode)
+                .map(moduleClassDomainMapper::toDomain);
+    }
+
+    @Override
+    public boolean existsByCode(String classCode) {
+        return moduleClassJpaRepository.existsByModuleClassCode(classCode);
+    }
+
+    @Override
     public List<ModuleClass> findBySemesterId(Long semesterId) {
         return moduleClassJpaRepository.findBySemesterId(semesterId)
                 .stream()

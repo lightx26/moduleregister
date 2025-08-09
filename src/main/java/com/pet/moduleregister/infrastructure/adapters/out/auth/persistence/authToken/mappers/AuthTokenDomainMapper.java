@@ -2,7 +2,7 @@ package com.pet.moduleregister.infrastructure.adapters.out.auth.persistence.auth
 
 import com.pet.moduleregister.infrastructure.adapters.out.auth.persistence.authToken.AuthTokenEntity;
 import com.pet.moduleregister.infrastructure.adapters.out._shared.mapper.DomainMapper;
-import com.pet.moduleregister.application.auth.ports.out.dto.AuthTokenDTO;
+import com.pet.moduleregister.application.auth.dto.AuthTokenDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

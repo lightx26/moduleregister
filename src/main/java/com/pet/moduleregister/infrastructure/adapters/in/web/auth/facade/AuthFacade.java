@@ -1,7 +1,7 @@
 package com.pet.moduleregister.infrastructure.adapters.in.web.auth.facade;
 
 import com.pet.moduleregister.infrastructure.adapters.in.web.auth.dto.request.LoginParams;
-import com.pet.moduleregister.application.auth.ports.in.dto.LoginResultDTO;
+import com.pet.moduleregister.application.auth.dto.LoginResultDTO;
 
 public interface AuthFacade {
     LoginResultDTO login(LoginParams loginParams);

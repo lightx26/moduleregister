@@ -1,6 +1,6 @@
 package com.pet.moduleregister.application.auth.ports.out;
 
-import com.pet.moduleregister.application.auth.ports.out.dto.AuthTokenDTO;
+import com.pet.moduleregister.application.auth.dto.AuthTokenDTO;
 
 import java.time.Instant;
 import java.util.Optional;

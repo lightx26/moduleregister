@@ -3,7 +3,7 @@ package com.pet.moduleregister.infrastructure.adapters.out.auth.persistence.auth
 import com.pet.moduleregister.infrastructure.adapters.out.auth.persistence.authToken.mappers.AuthTokenDomainMapper;
 import com.pet.moduleregister.infrastructure.adapters.out.auth.persistence.authToken.mappers.AuthTokenEntityMapper;
 import com.pet.moduleregister.application.auth.ports.out.AuthTokenRepositoryPort;
-import com.pet.moduleregister.application.auth.ports.out.dto.AuthTokenDTO;
+import com.pet.moduleregister.application.auth.dto.AuthTokenDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

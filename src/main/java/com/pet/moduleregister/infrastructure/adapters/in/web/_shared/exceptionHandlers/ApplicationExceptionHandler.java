@@ -1,7 +1,7 @@
 package com.pet.moduleregister.infrastructure.adapters.in.web._shared.exceptionHandlers;
 
 import com.pet.moduleregister.application.moduleClass.exceptions.NotRegistrationTimeException;
-import com.pet.moduleregister.application.shared.exceptions.NotFoundException;
+import com.pet.moduleregister.application._shared.exceptions.NotFoundException;
 import com.pet.moduleregister.infrastructure.adapters.in.web._shared.dto.response.ErrorResponse;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;

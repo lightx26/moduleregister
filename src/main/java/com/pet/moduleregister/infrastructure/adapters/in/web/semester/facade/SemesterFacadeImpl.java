@@ -1,6 +1,6 @@
 package com.pet.moduleregister.infrastructure.adapters.in.web.semester.facade;
 
-import com.pet.moduleregister.application.semester.ports.in.SetCurrentSemesterUsecase;
+import com.pet.moduleregister.application.semester.ports.in.usecases.SetCurrentSemester;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SemesterFacadeImpl implements SemesterFacade {
 
-    private final SetCurrentSemesterUsecase setCurrentSemesterUsecase;
+    private final SetCurrentSemester setCurrentSemesterUsecase;
 
     @Override
     public void setCurrentSemester(Long semesterId) {

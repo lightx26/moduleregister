@@ -4,7 +4,7 @@ import com.pet.moduleregister.infrastructure.adapters.in.web.auth.dto.request.Lo
 import com.pet.moduleregister.infrastructure.adapters.in.web.auth.facade.AuthFacade;
 import com.pet.moduleregister.infrastructure.adapters.in.web._shared.dto.response.ErrorResponse;
 import com.pet.moduleregister.infrastructure.adapters.in.web._shared.dto.response.MessageResponse;
-import com.pet.moduleregister.application.auth.ports.in.dto.LoginResultDTO;
+import com.pet.moduleregister.application.auth.dto.LoginResultDTO;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;

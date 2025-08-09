@@ -1,8 +1,8 @@
 package com.pet.moduleregister.infrastructure.adapters.in.web.moduleClass.facade;
 
 import com.pet.moduleregister.application.moduleClass.dto.OpeningClassDetails;
-import com.pet.moduleregister.application.moduleClass.ports.in.GetOpeningModuleClassDetails;
-import com.pet.moduleregister.application.moduleClass.ports.in.GetOpeningModuleClassesUsecase;
+import com.pet.moduleregister.application.moduleClass.ports.in.usecases.GetOpeningModuleClassDetails;
+import com.pet.moduleregister.application.moduleClass.ports.in.usecases.GetOpeningModuleClasses;
 import com.pet.moduleregister.infrastructure.adapters.in.web.moduleClass.dto.response.openingClass.OpeningClass;
 import com.pet.moduleregister.infrastructure.adapters.in.web._shared.dto.response.pagination.CursorPageResponse;
 import com.pet.moduleregister.infrastructure.adapters.in.web.moduleClass.dto.response.openingClass.OpeningClassDetailsResponse;
@@ -14,7 +14,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class ModuleClassFacadeImpl implements ModuleClassFacade {
-    private final GetOpeningModuleClassesUsecase getOpeningModuleClassesUsecase;
+    private final GetOpeningModuleClasses getOpeningModuleClassesUsecase;
     private final GetOpeningModuleClassDetails getOpeningModuleClassDetailsUsecase;
     @Override
     public CursorPageResponse<OpeningClass, Long> getOpeningModuleClasses(Long cursor, int limit) {
