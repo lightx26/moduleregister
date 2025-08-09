@@ -4,6 +4,8 @@ import com.pet.moduleregister.entities.moduleClassStudent.enums.LearnStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.Instant;
+
 @Getter
 @AllArgsConstructor
 public class ModuleClassStudent {
@@ -14,6 +16,6 @@ public class ModuleClassStudent {
     private LearnStatus status;
     private int retakeCount;
 
-    private String createdAt;
-    private String updatedAt;
+    private Instant createdAt;
+    private Instant updatedAt;
 }

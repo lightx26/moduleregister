@@ -2,13 +2,19 @@ package com.pet.moduleregister.infrastructure.adapters.out.moduleClassStudent.pe
 
 import com.pet.moduleregister.entities.moduleClassStudent.enums.LearnStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.Instant;
 
 @Entity
 @Table(name = "module_class_student")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ModuleClassStudentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,8 +35,8 @@ public class ModuleClassStudentEntity {
     private int retakeCount;
 
     @Column(name = "created_at")
-    private String createdAt;
+    private Instant createdAt;
 
     @Column(name = "updated_at")
-    private String updatedAt;
+    private Instant updatedAt;
 }

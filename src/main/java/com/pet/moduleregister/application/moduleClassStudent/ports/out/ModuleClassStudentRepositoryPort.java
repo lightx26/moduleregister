@@ -1,5 +1,7 @@
 package com.pet.moduleregister.application.moduleClassStudent.ports.out;
 
-public interface ModuleClassStudentRepositoryPort {
+import com.pet.moduleregister.entities.moduleClassStudent.ModuleClassStudent;
 
+public interface ModuleClassStudentRepositoryPort {
+    void add(ModuleClassStudent moduleClassStudent);
 }
