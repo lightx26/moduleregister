@@ -1,13 +1,13 @@
 package com.pet.moduleregister.infrastructure.adapters.in.web.moduleClass.facade;
 
-import com.pet.moduleregister.application.moduleClass.dto.OpeningClassDetails;
+import com.pet.moduleregister.application.moduleClass.dto.usecases.OpeningClassDetails;
 import com.pet.moduleregister.infrastructure.adapters.in.web.moduleClass.dto.response.openingClass.*;
 
 import java.util.List;
 
 public class ResponseMapper {
     public static OpeningClass mapToOpeningClass(
-            com.pet.moduleregister.application.moduleClass.dto.OpeningClass openingClass) {
+            com.pet.moduleregister.application.moduleClass.dto.usecases.OpeningClass openingClass) {
         Lecturer lecturer = new Lecturer(
                 openingClass.getLecturer().getLecturerId().toString(),
                 openingClass.getLecturer().getFirstName(),

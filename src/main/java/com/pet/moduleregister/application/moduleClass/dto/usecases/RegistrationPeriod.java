@@ -1,4 +1,4 @@
-package com.pet.moduleregister.application.moduleClass.dto;
+package com.pet.moduleregister.application.moduleClass.dto.usecases;
 
 import com.pet.moduleregister.entities.registrationPeriod.enums.RegistrationType;
 import lombok.AllArgsConstructor;

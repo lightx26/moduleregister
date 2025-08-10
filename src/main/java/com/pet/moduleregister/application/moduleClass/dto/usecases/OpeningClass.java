@@ -1,4 +1,4 @@
-package com.pet.moduleregister.application.moduleClass.dto;
+package com.pet.moduleregister.application.moduleClass.dto.usecases;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,6 +1,6 @@
 package com.pet.moduleregister.application.moduleClass.ports.in.usecases;
 
-import com.pet.moduleregister.application.moduleClass.dto.OpeningClass;
+import com.pet.moduleregister.application.moduleClass.dto.usecases.OpeningClass;
 import org.springframework.data.domain.Slice;
 
 

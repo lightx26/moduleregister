@@ -1,4 +1,4 @@
-package com.pet.moduleregister.application.auth.services;
+package com.pet.moduleregister.application.auth.services.usecases;
 
 import com.pet.moduleregister.application.auth.dto.UserDTO;
 import com.pet.moduleregister.application.auth.ports.in.usecases.Login;
@@ -30,14 +30,10 @@ public class LoginImpl implements Login {
         String userCode = loginData.userCode();
         String password = loginData.password();
 
-        UserDTO user;
-        try {
-            user = getUser.getUserByCode(userCode);
-        } catch (NotFoundException ignored) {
-            user = null;
-        }
+        UserDTO user = getUser.getUserByCode(userCode)
+                .orElseThrow(() -> new NotFoundException("User not found with userCode: " + userCode));
 
-        if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new IllegalArgumentException("Invalid userCode or password");
         }
 

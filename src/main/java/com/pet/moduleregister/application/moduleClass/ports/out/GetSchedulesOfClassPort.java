@@ -1,6 +1,6 @@
 package com.pet.moduleregister.application.moduleClass.ports.out;
 
-import com.pet.moduleregister.application.moduleClass.dto.Schedule;
+import com.pet.moduleregister.application.moduleClass.dto.usecases.Schedule;
 
 import java.util.List;
 

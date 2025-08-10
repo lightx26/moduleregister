@@ -1,12 +1,15 @@
-package com.pet.moduleregister.application.moduleClassStudent.services;
+package com.pet.moduleregister.application.moduleClassStudent.services.usecases;
 
 import com.pet.moduleregister.application._shared.AuthUser;
+import com.pet.moduleregister.application.moduleClassStudent.dto.ClassSchedule;
 import com.pet.moduleregister.application.moduleClassStudent.dto.ModuleClassDTO;
 import com.pet.moduleregister.application.moduleClassStudent.exceptions.DuplicateRegistrationException;
 import com.pet.moduleregister.application.moduleClassStudent.exceptions.NoAvailableSlotsException;
+import com.pet.moduleregister.application.moduleClassStudent.exceptions.ScheduleConflictsException;
 import com.pet.moduleregister.application.moduleClassStudent.ports.in.usecases.RegisterModuleClass;
 import com.pet.moduleregister.application._shared.exceptions.NotFoundException;
 import com.pet.moduleregister.application.moduleClassStudent.ports.out.GetModuleClassPort;
+import com.pet.moduleregister.application.moduleClassStudent.ports.out.GetSchedulesOfClassPort;
 import com.pet.moduleregister.application.moduleClassStudent.ports.out.ModuleClassStudentRepositoryPort;
 import com.pet.moduleregister.entities.moduleClassStudent.ModuleClassStudent;
 import com.pet.moduleregister.entities.moduleClassStudent.enums.LearnStatus;
@@ -18,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.List;
 
 
 @Service
@@ -27,6 +31,7 @@ public class RegisterModuleClassImpl implements RegisterModuleClass {
     private final RedisTemplate<String, String> redisTemplate;
     private final GetModuleClassPort getModuleClass;
     private final ModuleClassStudentRepositoryPort moduleClassStudentRepository;
+    private final GetSchedulesOfClassPort getSchedulesOfClass;
 
     private static final String REGISTER_LUA = """
         if redis.call("SISMEMBER", KEYS[2], ARGV[1]) == 1 then
@@ -81,6 +86,34 @@ public class RegisterModuleClassImpl implements RegisterModuleClass {
             rollBackRedisChange(currentStudent.getUserCode(), classCode);
             throw new RuntimeException("Failed to register student for class: " + e.getMessage(), e);
         }
+    }
+
+    private void checkScheduleConflicts(AuthUser currentStudent, ModuleClassDTO newModuleClass) {
+        // This method should check if the student has any schedule conflicts with the class
+        Long[] currentClassIds = moduleClassStudentRepository.findByStudentId(currentStudent.getUserId())
+                .stream()
+                .map(ModuleClassStudent::getModuleClassId)
+                .toArray(Long[]::new);
+        List<ClassSchedule> oldSchedules = getSchedulesOfClass.getSchedulesOfClass(currentClassIds);
+        ClassSchedule newClassSchedule = getSchedulesOfClass.getSchedulesOfClass(newModuleClass.getModuleClassId())
+                .stream()
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("Class schedule for " + newModuleClass.getModuleClassCode() + " not found."));
+
+        for (ClassSchedule schedule : oldSchedules) {
+            if (isScheduleConflict(schedule, newClassSchedule)) {
+                throw new ScheduleConflictsException(
+                        "Schedule conflict detected for class " + newModuleClass.getModuleClassCode() +
+                                " on day " + schedule.getDayOfWeek() + "."
+                );
+            }
+        }
+    }
+
+    private boolean isScheduleConflict(ClassSchedule oldSchedule, ClassSchedule newSchedule) {
+        return oldSchedule.getDayOfWeek() == newSchedule.getDayOfWeek() &&
+                (oldSchedule.getStartPeriod() < newSchedule.getEndPeriod() &&
+                        oldSchedule.getEndPeriod() > newSchedule.getStartPeriod());
     }
 
     private void checkValidRegistrationForClass(String studentCode, String classCode) {

@@ -1,4 +1,4 @@
-package com.pet.moduleregister.application.auth.services;
+package com.pet.moduleregister.application.auth.services.usecases;
 
 import com.pet.moduleregister.application.auth.ports.in.usecases.Refresh;
 import com.pet.moduleregister.application.auth.dto.LoginResultDTO;

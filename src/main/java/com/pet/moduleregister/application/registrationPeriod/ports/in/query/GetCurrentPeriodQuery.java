@@ -2,6 +2,6 @@ package com.pet.moduleregister.application.registrationPeriod.ports.in.query;
 
 import com.pet.moduleregister.entities.registrationPeriod.RegistrationPeriod;
 
-public interface GetCurrentPeriod {
+public interface GetCurrentPeriodQuery {
     RegistrationPeriod getCurrentPeriod();
 }

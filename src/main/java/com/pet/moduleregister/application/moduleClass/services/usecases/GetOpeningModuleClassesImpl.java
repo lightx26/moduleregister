@@ -1,10 +1,10 @@
-package com.pet.moduleregister.application.moduleClass.services;
+package com.pet.moduleregister.application.moduleClass.services.usecases;
 
-import com.pet.moduleregister.application.moduleClass.dto.RegistrationPeriod;
-import com.pet.moduleregister.application.moduleClass.dto.Schedule;
+import com.pet.moduleregister.application.moduleClass.dto.usecases.RegistrationPeriod;
+import com.pet.moduleregister.application.moduleClass.dto.usecases.Schedule;
 import com.pet.moduleregister.application.moduleClass.exceptions.NotRegistrationTimeException;
 import com.pet.moduleregister.application.moduleClass.ports.in.usecases.GetOpeningModuleClasses;
-import com.pet.moduleregister.application.moduleClass.dto.OpeningClass;
+import com.pet.moduleregister.application.moduleClass.dto.usecases.OpeningClass;
 import com.pet.moduleregister.application.moduleClass.ports.out.GetCurrentPeriodPort;
 import com.pet.moduleregister.application.moduleClass.ports.out.GetSchedulesOfClassPort;
 import com.pet.moduleregister.application.moduleClass.ports.out.ModuleClassRepositoryPort;

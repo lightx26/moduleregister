@@ -1,8 +1,8 @@
-package com.pet.moduleregister.application.registrationPeriod.services;
+package com.pet.moduleregister.application.registrationPeriod.services.query;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pet.moduleregister.application.registrationPeriod.ports.in.query.GetCurrentPeriod;
+import com.pet.moduleregister.application.registrationPeriod.ports.in.query.GetCurrentPeriodQuery;
 import com.pet.moduleregister.application.registrationPeriod.ports.out.RegistrationPeriodRepositoryPort;
 import com.pet.moduleregister.application._shared.exceptions.NotFoundException;
 import com.pet.moduleregister.entities.registrationPeriod.RegistrationPeriod;
@@ -15,7 +15,7 @@ import java.time.Instant;
 
 @Service
 @RequiredArgsConstructor
-public class GetCurrentPeriodImpl implements GetCurrentPeriod {
+public class GetCurrentPeriodQueryImpl implements GetCurrentPeriodQuery {
     private final RegistrationPeriodRepositoryPort registrationPeriodRepository;
     private final RedisTemplate<String, String> redisTemplate;
     private final ObjectMapper objectMapper;

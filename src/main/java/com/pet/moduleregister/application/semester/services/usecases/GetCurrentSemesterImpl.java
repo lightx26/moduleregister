@@ -1,4 +1,4 @@
-package com.pet.moduleregister.application.semester.services;
+package com.pet.moduleregister.application.semester.services.usecases;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

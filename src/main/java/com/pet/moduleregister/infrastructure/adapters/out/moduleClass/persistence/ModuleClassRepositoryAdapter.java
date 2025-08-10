@@ -1,9 +1,9 @@
 package com.pet.moduleregister.infrastructure.adapters.out.moduleClass.persistence;
 
-import com.pet.moduleregister.application.moduleClass.dto.ClassParticipant;
-import com.pet.moduleregister.application.moduleClass.dto.Lecturer;
-import com.pet.moduleregister.application.moduleClass.dto.OpeningClass;
-import com.pet.moduleregister.application.moduleClass.dto.OpeningClassDetails;
+import com.pet.moduleregister.application.moduleClass.dto.usecases.ClassParticipant;
+import com.pet.moduleregister.application.moduleClass.dto.usecases.Lecturer;
+import com.pet.moduleregister.application.moduleClass.dto.usecases.OpeningClass;
+import com.pet.moduleregister.application.moduleClass.dto.usecases.OpeningClassDetails;
 import com.pet.moduleregister.entities.moduleClassStudent.enums.LearnStatus;
 import com.pet.moduleregister.infrastructure.adapters.out.moduleClass.persistence.mappers.ModuleClassDomainMapper;
 import com.pet.moduleregister.application.moduleClass.ports.out.ModuleClassRepositoryPort;

@@ -2,10 +2,7 @@ package com.pet.moduleregister.infrastructure.adapters.out.moduleClassStudent.pe
 
 import com.pet.moduleregister.entities.moduleClassStudent.enums.LearnStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.Instant;
 
@@ -15,6 +12,7 @@ import java.time.Instant;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ModuleClassStudentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

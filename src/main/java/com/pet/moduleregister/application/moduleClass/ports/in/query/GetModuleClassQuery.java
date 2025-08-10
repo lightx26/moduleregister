@@ -4,6 +4,6 @@ import com.pet.moduleregister.entities.moduleClass.ModuleClass;
 
 import java.util.Optional;
 
-public interface GetModuleClass {
+public interface GetModuleClassQuery {
     Optional<ModuleClass> getByClassCode(String classCode);
 }

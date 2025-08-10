@@ -5,6 +5,8 @@ import com.pet.moduleregister.entities.moduleClassStudent.ModuleClassStudent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @RequiredArgsConstructor
 public class ModuleClassStudentRepositoryAdapter implements ModuleClassStudentRepositoryPort {
@@ -12,15 +14,30 @@ public class ModuleClassStudentRepositoryAdapter implements ModuleClassStudentRe
 
     @Override
     public void add(ModuleClassStudent moduleClassStudent) {
-        ModuleClassStudentEntity entity = new ModuleClassStudentEntity(
-                null,
-                moduleClassStudent.getModuleClassId(),
-                moduleClassStudent.getStudentId(),
-                moduleClassStudent.getStatus(),
-                moduleClassStudent.getRetakeCount(),
-                moduleClassStudent.getCreatedAt(),
-                moduleClassStudent.getUpdatedAt()
-        );
+        ModuleClassStudentEntity entity = ModuleClassStudentEntity.builder()
+                .moduleClassId(moduleClassStudent.getModuleClassId())
+                .studentId(moduleClassStudent.getStudentId())
+                .status(moduleClassStudent.getStatus())
+                .retakeCount(moduleClassStudent.getRetakeCount())
+                .createdAt(moduleClassStudent.getCreatedAt())
+                .updatedAt(moduleClassStudent.getUpdatedAt())
+                .build();
         moduleClassStudentJpaRepository.save(entity);
+    }
+
+    @Override
+    public List<ModuleClassStudent> findByStudentId(Long studentId) {
+        return moduleClassStudentJpaRepository.findAllByStudentId(studentId)
+                .stream()
+                .map(entity -> new ModuleClassStudent(
+                        entity.getModuleClassStudentId(),
+                        entity.getModuleClassId(),
+                        entity.getStudentId(),
+                        entity.getStatus(),
+                        entity.getRetakeCount(),
+                        entity.getCreatedAt(),
+                        entity.getUpdatedAt()
+                ))
+                .toList();
     }
 }

@@ -1,4 +1,4 @@
-package com.pet.moduleregister.application.semester.services;
+package com.pet.moduleregister.application.semester.services.usecases;
 
 import com.pet.moduleregister.application.semester.ports.in.usecases.SetCurrentSemester;
 import com.pet.moduleregister.application.semester.ports.out.SemesterRepositoryPort;

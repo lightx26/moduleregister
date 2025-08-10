@@ -5,6 +5,6 @@ import com.pet.moduleregister.application.classSchedule.dto.Schedule;
 
 import java.util.List;
 
-public interface GetSchedulesOfClass {
+public interface GetSchedulesOfClassQuery {
     List<Schedule> getSchedulesOfClass(Long... moduleClassIds);
 }

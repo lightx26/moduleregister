@@ -1,6 +1,6 @@
 package com.pet.moduleregister.infrastructure.adapters.in.web.moduleClass.facade;
 
-import com.pet.moduleregister.application.moduleClass.dto.OpeningClassDetails;
+import com.pet.moduleregister.application.moduleClass.dto.usecases.OpeningClassDetails;
 import com.pet.moduleregister.application.moduleClass.ports.in.usecases.GetOpeningModuleClassDetails;
 import com.pet.moduleregister.application.moduleClass.ports.in.usecases.GetOpeningModuleClasses;
 import com.pet.moduleregister.infrastructure.adapters.in.web.moduleClass.dto.response.openingClass.OpeningClass;
