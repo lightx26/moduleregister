@@ -121,6 +121,7 @@ public class ModuleClassRepositoryAdapter implements ModuleClassRepositoryPort {
         );
         String jpql = """
                 SELECT mc.moduleClassId as moduleClassId,
+                    mc.semesterId as semesterId,
                     mc.moduleClassCode as moduleClassCode,
                     m.moduleName as moduleName,
                     m.numberOfCredits as numberOfCredits,
@@ -186,6 +187,7 @@ public class ModuleClassRepositoryAdapter implements ModuleClassRepositoryPort {
                 )).toList();
         OpeningClassDetails openingClassDetails = new OpeningClassDetails(
                 firstResult.get("moduleClassId", Long.class),
+                firstResult.get("semesterId", Long.class),
                 firstResult.get("moduleClassCode", String.class),
                 firstResult.get("moduleName", String.class),
                 firstResult.get("numberOfCredits", Integer.class),

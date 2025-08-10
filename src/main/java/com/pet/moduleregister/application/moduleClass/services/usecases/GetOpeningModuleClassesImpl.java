@@ -1,14 +1,13 @@
 package com.pet.moduleregister.application.moduleClass.services.usecases;
 
+import com.pet.moduleregister.application._shared.exceptions.NotRegistrationTimeException;
 import com.pet.moduleregister.application.moduleClass.dto.usecases.RegistrationPeriod;
 import com.pet.moduleregister.application.moduleClass.dto.usecases.Schedule;
-import com.pet.moduleregister.application.moduleClass.exceptions.NotRegistrationTimeException;
 import com.pet.moduleregister.application.moduleClass.ports.in.usecases.GetOpeningModuleClasses;
 import com.pet.moduleregister.application.moduleClass.dto.usecases.OpeningClass;
 import com.pet.moduleregister.application.moduleClass.ports.out.GetCurrentPeriodPort;
 import com.pet.moduleregister.application.moduleClass.ports.out.GetSchedulesOfClassPort;
 import com.pet.moduleregister.application.moduleClass.ports.out.ModuleClassRepositoryPort;
-import com.pet.moduleregister.application._shared.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -29,14 +28,10 @@ public class GetOpeningModuleClassesImpl implements GetOpeningModuleClasses {
 
     @Override
     public Slice<OpeningClass> getOpeningModuleClasses(int limit) {
-        RegistrationPeriod period;
-        try {
-            period = getCurrentPeriod.getCurrentPeriod();
-        } catch (NotFoundException ignored) {
-            throw new NotRegistrationTimeException(
-                    "No current registration period found. Please check the registration periods."
-            );
-        }
+        RegistrationPeriod period = getCurrentPeriod.getCurrentPeriod()
+                .orElseThrow(() -> new NotRegistrationTimeException(
+                        "No current registration period found. Please check the registration periods."
+                ));
 
         List<OpeningClass> openingClasses =
                 moduleClassRepository.findOpeningClassesBySemesterId(period.getSemesterId(), limit + 1);

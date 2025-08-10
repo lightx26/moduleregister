@@ -1,4 +1,4 @@
-package com.pet.moduleregister.application.moduleClass.exceptions;
+package com.pet.moduleregister.application._shared.exceptions;
 
 public class NotRegistrationTimeException extends RuntimeException {
 

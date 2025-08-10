@@ -11,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class OpeningClassDetails {
     private Long moduleClassId;
+    private Long semesterId;
     private String moduleClassCode;
     private String moduleName;
     private int numberOfCredits;

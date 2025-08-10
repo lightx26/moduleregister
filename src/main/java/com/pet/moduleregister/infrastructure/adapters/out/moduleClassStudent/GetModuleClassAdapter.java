@@ -18,7 +18,8 @@ public class GetModuleClassAdapter implements GetModuleClassPort {
         return getModuleClass.getByClassCode(classCode)
                 .map(moduleClass -> new ModuleClassDTO(
                         moduleClass.getModuleClassId(),
-                        moduleClass.getModuleClassCode()
+                        moduleClass.getModuleClassCode(),
+                        moduleClass.getSemesterId()
                 ));
     }
 }

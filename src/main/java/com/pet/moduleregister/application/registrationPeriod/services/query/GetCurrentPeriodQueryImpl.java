@@ -4,14 +4,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pet.moduleregister.application.registrationPeriod.ports.in.query.GetCurrentPeriodQuery;
 import com.pet.moduleregister.application.registrationPeriod.ports.out.RegistrationPeriodRepositoryPort;
-import com.pet.moduleregister.application._shared.exceptions.NotFoundException;
 import com.pet.moduleregister.entities.registrationPeriod.RegistrationPeriod;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import javax.swing.text.html.Option;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,28 +23,23 @@ public class GetCurrentPeriodQueryImpl implements GetCurrentPeriodQuery {
     private final ObjectMapper objectMapper;
 
     @Override
-    public RegistrationPeriod getCurrentPeriod() {
-
-        String cacheKey = "currentRegistrationPeriod";
+    public Optional<RegistrationPeriod> getCurrentPeriod() {
+        final String cacheKey = "currentRegistrationPeriod";
         String cached = redisTemplate.opsForValue().get(cacheKey);
 
-        if (!(cached == null || cached.isEmpty())) {
-            return deserializeRegistration(cached);
+        if (StringUtils.hasText(cached)) {
+            return Optional.ofNullable(deserializeRegistration(cached));
         }
 
-        RegistrationPeriod currentPeriod = registrationPeriodRepository.getPeriodByDate(Instant.now()).orElseThrow(
-                () -> new NotFoundException("No current registration period found")
-        );
-
-        Duration ttl = Duration.between(Instant.now(), currentPeriod.getEndTime());
-
-        redisTemplate.opsForValue().set(
-                cacheKey,
-                serializeRegistration(currentPeriod),
-                ttl // TTL until the end of the registration period
-        );
-
-        return currentPeriod;
+        Instant now = Instant.now();
+        return registrationPeriodRepository.getPeriodByDate(now)
+                .map(period -> {
+                    Duration ttl = Duration.between(now, period.getEndTime());
+                    if (!ttl.isNegative() && !ttl.isZero()) {
+                        redisTemplate.opsForValue().set(cacheKey, serializeRegistration(period), ttl);
+                    }
+                    return period;
+                });
     }
 
     private String serializeRegistration(RegistrationPeriod period) {

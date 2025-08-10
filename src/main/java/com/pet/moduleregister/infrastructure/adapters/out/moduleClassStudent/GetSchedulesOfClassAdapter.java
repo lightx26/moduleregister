@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
+@Component("getSchedulesOfClassAdapterMCS")
 @RequiredArgsConstructor
 public class GetSchedulesOfClassAdapter implements GetSchedulesOfClassPort {
     private final GetSchedulesOfClassQuery getSchedulesOfClassQuery;

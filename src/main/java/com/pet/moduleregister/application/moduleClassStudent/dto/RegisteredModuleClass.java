@@ -3,10 +3,11 @@ package com.pet.moduleregister.application.moduleClassStudent.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.Instant;
+
 @Getter
 @AllArgsConstructor
-public class ModuleClassDTO {
-    private Long moduleClassId;
+public class RegisteredModuleClass {
     private String moduleClassCode;
-    private Long semesterId;
+    private Instant registeredAt;
 }
