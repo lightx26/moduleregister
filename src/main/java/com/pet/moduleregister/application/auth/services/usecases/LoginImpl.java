@@ -34,7 +34,7 @@ public class LoginImpl implements Login {
                 .orElseThrow(() -> new NotFoundException("User not found with userCode: " + userCode));
 
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new IllegalArgumentException("Invalid userCode or password");
+            throw new NotFoundException("Invalid userCode or password");
         }
 
         String accessToken = tokenServicePort.generateAccessToken(user.getUserId().toString());

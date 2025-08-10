@@ -15,7 +15,9 @@ public class AuthTokenEntityMapper implements EntityMapper<AuthTokenDTO, AuthTok
             return null;
         }
         return AuthTokenEntity.builder()
-                .authTokenId(Long.parseLong(dto.getAuthTokenId()))
+                .authTokenId(
+                        dto.getAuthTokenId() != null ? Long.parseLong(dto.getAuthTokenId()) : null
+                )
                 .userId(dto.getUserId())
                 .refreshToken(dto.getRefreshToken())
                 .createdAt(dto.getCreatedAt())

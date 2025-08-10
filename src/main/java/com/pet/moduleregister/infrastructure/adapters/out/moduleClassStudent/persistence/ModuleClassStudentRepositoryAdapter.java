@@ -13,7 +13,7 @@ public class ModuleClassStudentRepositoryAdapter implements ModuleClassStudentRe
     private final ModuleClassStudentJpaRepository moduleClassStudentJpaRepository;
 
     @Override
-    public void add(ModuleClassStudent moduleClassStudent) {
+    public void create(ModuleClassStudent moduleClassStudent) {
         ModuleClassStudentEntity entity = ModuleClassStudentEntity.builder()
                 .moduleClassId(moduleClassStudent.getModuleClassId())
                 .studentId(moduleClassStudent.getStudentId())

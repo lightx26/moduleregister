@@ -96,7 +96,7 @@ public class RegisterModuleClassImpl implements RegisterModuleClass {
             moduleClassStudent.setCreatedAt(now);
             moduleClassStudent.setUpdatedAt(now);
 
-            moduleClassStudentRepository.add(moduleClassStudent);
+            moduleClassStudentRepository.create(moduleClassStudent);
         } catch (Exception e) {
             // Rollback Redis changes if DB save fails
             rollBackRedisChange(currentStudent.getUserCode(), classCode);

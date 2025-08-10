@@ -5,6 +5,6 @@ import com.pet.moduleregister.entities.moduleClassStudent.ModuleClassStudent;
 import java.util.List;
 
 public interface ModuleClassStudentRepositoryPort {
-    void add(ModuleClassStudent moduleClassStudent);
+    void create(ModuleClassStudent moduleClassStudent);
     List<ModuleClassStudent> findByStudentId(Long studentId);
 }
