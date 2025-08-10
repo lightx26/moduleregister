@@ -38,6 +38,11 @@ public class RegisterModuleClassImpl implements RegisterModuleClass {
     private final GetSchedulesOfClassPort getSchedulesOfClass;
     private final GetCurrentPeriodPort getCurrentPeriod;
 
+    /*
+    * NOTE: Although the method `registerModuleClass` already check if the student registered for this class before,
+    * the Redis Lua script step that check the condition again is still needed to avoid race condition (at db)
+    * when multiple requests try to register the same student for the same class at the same time.
+    * */
     private static final String REGISTER_LUA = """
         if redis.call("SISMEMBER", KEYS[2], ARGV[1]) == 1 then
             return -1   -- Already registered
@@ -71,16 +76,26 @@ public class RegisterModuleClassImpl implements RegisterModuleClass {
                         "No current registration period found. Please check the registration periods."
                 ));
         // Check if the class code is valid
-        ModuleClassDTO moduleClass = getModuleClass.getModuleClassByCode(classCode)
+        ModuleClassDTO newModuleClass = getModuleClass.getModuleClassByCode(classCode)
                 .orElseThrow(() -> new NotFoundException(
                         "Module class with code " + classCode + " does not exist."
                 ));
         // Check if the class can be registered in the current period
-        if (!period.getSemesterId().equals(moduleClass.getSemesterId())) {
+        if (!period.getSemesterId().equals(newModuleClass.getSemesterId())) {
             throw new NotRegistrationTimeException("Registration is not allowed at this time.");
         }
-        // Check the schedule for conflicts
-        checkScheduleConflicts(currentStudent, moduleClass);
+        // Check if the student is already registered for the class
+        List<ModuleClassStudent> currentClasses = moduleClassStudentRepository.findByStudentId(currentStudent.getUserId());
+        if (!currentClasses.isEmpty()) {
+            if (currentClasses.stream().anyMatch(c -> c.getModuleClassId().equals(newModuleClass.getModuleClassId()))) {
+                throw new DuplicatedRegistrationException(
+                        "Student " + currentStudent.getUserCode() + " is already registered for class " + newModuleClass.getModuleClassCode() + "."
+                );
+            }
+            // Check for schedule conflicts with existing classes
+            checkScheduleConflicts(currentClasses, newModuleClass);
+        }
+
         // Check if the student can register for the class (is not registered and class still has available slots)
         checkValidRegistrationForClass(currentStudent.getUserCode(), classCode);
 
@@ -89,7 +104,7 @@ public class RegisterModuleClassImpl implements RegisterModuleClass {
         try {
             ModuleClassStudent moduleClassStudent = new ModuleClassStudent();
 
-            moduleClassStudent.setModuleClassId(moduleClass.getModuleClassId());
+            moduleClassStudent.setModuleClassId(newModuleClass.getModuleClassId());
             moduleClassStudent.setStudentId(currentStudent.getUserId());
             moduleClassStudent.setStatus(LearnStatus.REGISTERED);
             moduleClassStudent.setRetakeCount(0); // Retake count starts at 0
@@ -103,13 +118,12 @@ public class RegisterModuleClassImpl implements RegisterModuleClass {
             throw new RuntimeException("Failed to register student for class: " + e.getMessage(), e);
         }
 
-        return new RegisteredModuleClass(moduleClass.getModuleClassCode(), now);
+        return new RegisteredModuleClass(newModuleClass.getModuleClassCode(), now);
     }
 
-    private void checkScheduleConflicts(AuthUser currentStudent, ModuleClassDTO newModuleClass) {
+    private void checkScheduleConflicts(List<ModuleClassStudent> currentClasses, ModuleClassDTO newModuleClass) {
         // This method should check if the student has any schedule conflicts with the class
-        Long[] currentClassIds = moduleClassStudentRepository.findByStudentId(currentStudent.getUserId())
-                .stream()
+        Long[] currentClassIds = currentClasses.stream()
                 .map(ModuleClassStudent::getModuleClassId)
                 .toArray(Long[]::new);
         List<ClassSchedule> oldSchedules = getSchedulesOfClass.getSchedulesOfClass(currentClassIds);
@@ -129,6 +143,9 @@ public class RegisterModuleClassImpl implements RegisterModuleClass {
     }
 
     private boolean isScheduleConflict(ClassSchedule oldSchedule, ClassSchedule newSchedule) {
+        if (oldSchedule.getModuleClassId().equals(newSchedule.getModuleClassId())) {
+            return false;
+        }
         return oldSchedule.getDayOfWeek() == newSchedule.getDayOfWeek() &&
                 (oldSchedule.getStartPeriod() < newSchedule.getEndPeriod() &&
                         oldSchedule.getEndPeriod() > newSchedule.getStartPeriod());
