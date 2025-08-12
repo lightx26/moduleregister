@@ -38,6 +38,11 @@ public class ModuleClassFacadeImpl implements ModuleClassFacade {
     }
 
     @Override
+    public List<OpeningClass> getMyOpeningModuleClasses() {
+        return null;
+    }
+
+    @Override
     public OpeningClassDetailsResponse getOpeningModuleClassDetails(String classCode) {
         OpeningClassDetails classDetails = getOpeningModuleClassDetailsUsecase.getOpeningModuleClassDetails(classCode);
         return ResponseMapper.mapToOpeningClassDetailsResponse(classDetails);

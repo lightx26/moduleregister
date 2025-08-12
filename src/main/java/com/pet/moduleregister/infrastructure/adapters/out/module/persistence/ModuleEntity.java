@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
@@ -23,7 +24,7 @@ public class ModuleEntity {
     private String moduleName;
 
     @Column(name = "number_of_credits")
-    private int numberOfCredits;
+    private BigDecimal numberOfCredits;
 
     @Column(name = "responsible_faculty")
     private Long responsibleFaculty;

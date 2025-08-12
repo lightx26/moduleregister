@@ -17,12 +17,12 @@ public class ClassRegistrationFacadeImpl implements ClassRegistrationFacade {
     @Override
     public RegisterSuccessResponse registerClass(ClassRegistrationParams params) {
         AuthUser authUser = AuthUtils.getCurrentUser().map(
-                user -> new AuthUser(
-                        user.getUserId(),
-                        user.getUserCode(),
-                        user.getStatus(),
-                        user.getRole()
-                )
+                user -> AuthUser.builder()
+                        .userId(user.getUserId())
+                        .userCode(user.getUserCode())
+                        .status(user.getStatus())
+                        .role(user.getRole())
+                        .build()
         ).orElseThrow(() -> new IllegalStateException("User not authenticated"));
         // Implement the logic to register a class using the provided parameters
         // This is just a placeholder method

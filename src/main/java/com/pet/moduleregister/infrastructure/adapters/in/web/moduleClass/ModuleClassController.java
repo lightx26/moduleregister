@@ -20,6 +20,12 @@ public class ModuleClassController {
         return ResponseEntity.ok(res);
     }
 
+    @GetMapping("/opening-classes/for-me")
+    public ResponseEntity<?> getMyOpeningModuleClasses() {
+        var res = moduleClassFacade.getMyOpeningModuleClasses();
+        return ResponseEntity.ok(res);
+    }
+
     @GetMapping("/opening-classes/{id}")
     public ResponseEntity<?> getOpeningModuleClassDetails(@PathVariable String id) {
         var res = moduleClassFacade.getOpeningModuleClassDetails(id);

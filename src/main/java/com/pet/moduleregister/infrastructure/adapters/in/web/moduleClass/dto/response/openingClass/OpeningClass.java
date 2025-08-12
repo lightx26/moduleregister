@@ -4,6 +4,7 @@ package com.pet.moduleregister.infrastructure.adapters.in.web.moduleClass.dto.re
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -11,7 +12,7 @@ import java.util.List;
 public class OpeningClass {
     private String moduleClassCode;
     private String moduleName;
-    private int numberOfCredits;
+    private BigDecimal numberOfCredits;
     private Lecturer lecturer;
     private List<Schedule> schedules;
 

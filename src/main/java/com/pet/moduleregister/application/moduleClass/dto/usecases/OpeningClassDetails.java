@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -14,7 +15,7 @@ public class OpeningClassDetails {
     private Long semesterId;
     private String moduleClassCode;
     private String moduleName;
-    private int numberOfCredits;
+    private BigDecimal numberOfCredits;
     private Lecturer lecturer;
     private List<Schedule> schedules;
 

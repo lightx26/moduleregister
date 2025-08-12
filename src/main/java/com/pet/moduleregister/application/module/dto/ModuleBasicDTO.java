@@ -1,20 +1,16 @@
-package com.pet.moduleregister.entities.module;
+package com.pet.moduleregister.application.module.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 
 @Getter
 @AllArgsConstructor
-public class Module {
+public class ModuleBasicDTO {
     private Long moduleId;
     private String moduleCode;
     private String moduleName;
     private BigDecimal numberOfCredits;
-    private Long responsibleFaculty;
-
-    private Instant createdAt;
-    private Instant updatedAt;
+    private boolean isCompulsory;
 }

@@ -2,6 +2,7 @@ package com.pet.moduleregister.application.moduleClass.ports.out;
 
 import com.pet.moduleregister.application.moduleClass.dto.usecases.OpeningClass;
 import com.pet.moduleregister.application.moduleClass.dto.usecases.OpeningClassDetails;
+import com.pet.moduleregister.application.moduleClass.dto.usecases.PersonalOpeningClass;
 import com.pet.moduleregister.entities.moduleClass.ModuleClass;
 
 import java.util.List;
@@ -14,5 +15,6 @@ public interface ModuleClassRepositoryPort {
     boolean existsByCode(String classCode);
     List<ModuleClass> findBySemesterId(Long semesterId);
     List<OpeningClass> findOpeningClassesBySemesterId(Long semesterId, int limit);
+    List<PersonalOpeningClass> findPersonalOpeningClasses(Long semesterId, List<Long> moduleIds);
     Optional<OpeningClassDetails> findOpeningModuleClassByCode(String classCode);
 }

@@ -1,9 +1,6 @@
 package com.pet.moduleregister.infrastructure.adapters.out.moduleClass.persistence;
 
-import com.pet.moduleregister.application.moduleClass.dto.usecases.ClassParticipant;
-import com.pet.moduleregister.application.moduleClass.dto.usecases.Lecturer;
-import com.pet.moduleregister.application.moduleClass.dto.usecases.OpeningClass;
-import com.pet.moduleregister.application.moduleClass.dto.usecases.OpeningClassDetails;
+import com.pet.moduleregister.application.moduleClass.dto.usecases.*;
 import com.pet.moduleregister.entities.moduleClassStudent.enums.LearnStatus;
 import com.pet.moduleregister.infrastructure.adapters.out.moduleClass.persistence.mappers.ModuleClassDomainMapper;
 import com.pet.moduleregister.application.moduleClass.ports.out.ModuleClassRepositoryPort;
@@ -15,6 +12,7 @@ import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -91,7 +89,7 @@ public class ModuleClassRepositoryAdapter implements ModuleClassRepositoryPort {
                     Long moduleClassId = result.get("moduleClassId", Long.class);
                     String moduleClassCode = result.get("moduleClassCode", String.class);
                     String moduleName = result.get("moduleName", String.class);
-                    int numberOfCredits = result.get("numberOfCredits", Integer.class);
+                    BigDecimal numberOfCredits = result.get("numberOfCredits", BigDecimal.class);
                     Long lecturerId = result.get("lecturerId", Long.class);
                     String lecturerFirstName = result.get("lecturerFirstName", String.class);
                     String lecturerLastName = result.get("lecturerLastName", String.class);
@@ -110,6 +108,64 @@ public class ModuleClassRepositoryAdapter implements ModuleClassRepositoryPort {
                             maxParticipants,
                             currentParticipants
                     );
+                }
+        ).toList();
+    }
+
+    @Override
+    public List<PersonalOpeningClass> findPersonalOpeningClasses(Long semesterId, List<Long> moduleIds) {
+        List<LearnStatus> statuses = List.of(LearnStatus.REGISTERED, LearnStatus.WAITING);
+
+        String jpql = """
+                SELECT
+                    mc.moduleClassId as moduleClassId,
+                    mc.moduleClassCode as moduleClassCode,
+                    mc.moduleId as moduleId,
+                    u.userId as lecturerId,
+                    u.firstName as lecturerFirstName,
+                    u.lastName as lecturerLastName,
+                    mcs.status as learnStatus,
+                    mc.maxParticipants as maxParticipants,
+                    COUNT (mcs.studentId) as currentParticipants
+                FROM ModuleClassEntity mc
+                JOIN UserEntity u ON mc.lecturerId = u.userId
+                LEFT JOIN ModuleClassStudentEntity mcs ON mc.moduleClassId = mcs.moduleClassId
+                WHERE mc.semesterId = :semesterId AND mc.moduleId IN :moduleIds AND mcs.status NOT IN :statuses
+                GROUP BY mc.moduleClassId, mc.moduleClassCode,
+                    u.userId, u.firstName, u.lastName,
+                    mc.maxParticipants, mcs.status
+                """;
+
+        TypedQuery<Tuple> query = entityManager.createQuery(jpql, Tuple.class);
+        query.setParameter("semesterId", semesterId);
+        query.setParameter("moduleIds", moduleIds);
+        query.setParameter("statuses", statuses);
+
+        List<Tuple> results = query.getResultList();
+
+        return results.stream().map(
+                result -> {
+                    Long moduleClassId = result.get("moduleClassId", Long.class);
+                    String moduleClassCode = result.get("moduleClassCode", String.class);
+                    Long moduleId = result.get("moduleId", Long.class);
+                    Long lecturerId = result.get("lecturerId", Long.class);
+                    String lecturerFirstName = result.get("lecturerFirstName", String.class);
+                    String lecturerLastName = result.get("lecturerLastName", String.class);
+                    int maxParticipants = result.get("maxParticipants", Integer.class);
+                    int currentParticipants = result.get("currentParticipants", Long.class).intValue();
+                    LearnStatus learnStatus = result.get("learnStatus", LearnStatus.class);
+
+                    Lecturer lecturer = new Lecturer(lecturerId, lecturerFirstName, lecturerLastName);
+
+                    return PersonalOpeningClass.builder()
+                            .moduleClassId(moduleClassId)
+                            .moduleClassCode(moduleClassCode)
+                            .moduleId(moduleId)
+                            .lecturer(lecturer)
+                            .learnStatus(learnStatus)
+                            .maxParticipants(maxParticipants)
+                            .currentParticipants(currentParticipants)
+                            .build();
                 }
         ).toList();
     }
@@ -190,7 +246,7 @@ public class ModuleClassRepositoryAdapter implements ModuleClassRepositoryPort {
                 firstResult.get("semesterId", Long.class),
                 firstResult.get("moduleClassCode", String.class),
                 firstResult.get("moduleName", String.class),
-                firstResult.get("numberOfCredits", Integer.class),
+                firstResult.get("numberOfCredits", BigDecimal.class),
                 lecturer,
                 List.of(), // Schedules can be added here if needed
                 firstResult.get("maxParticipants", Integer.class),
