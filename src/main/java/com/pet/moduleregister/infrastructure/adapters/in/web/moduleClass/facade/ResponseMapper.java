@@ -1,6 +1,7 @@
 package com.pet.moduleregister.infrastructure.adapters.in.web.moduleClass.facade;
 
 import com.pet.moduleregister.application.moduleClass.dto.usecases.OpeningClassDetails;
+import com.pet.moduleregister.application.moduleClass.dto.usecases.PersonalOpeningClass;
 import com.pet.moduleregister.infrastructure.adapters.in.web.moduleClass.dto.response.openingClass.*;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public class ResponseMapper {
     public static OpeningClass mapToOpeningClass(
             com.pet.moduleregister.application.moduleClass.dto.usecases.OpeningClass openingClass) {
         Lecturer lecturer = new Lecturer(
-                openingClass.getLecturer().getLecturerId().toString(),
+                openingClass.getLecturer().getLecturerCode(),
                 openingClass.getLecturer().getFirstName(),
                 openingClass.getLecturer().getLastName()
         );
@@ -30,6 +31,32 @@ public class ResponseMapper {
                 schedules,
                 openingClass.getMaxParticipants(),
                 openingClass.getCurrentParticipants()
+        );
+    }
+
+    public static OpeningClass mapToOpeningClass(PersonalOpeningClass personalOpeningClass) {
+        Lecturer lecturer = new Lecturer(
+                personalOpeningClass.getLecturer().getLecturerCode(),
+                personalOpeningClass.getLecturer().getFirstName(),
+                personalOpeningClass.getLecturer().getLastName()
+        );
+        List<Schedule> schedules = personalOpeningClass.getSchedules().stream().map(
+                schedule -> new Schedule(
+                        schedule.getDayOfWeek(),
+                        schedule.getStartPeriod(),
+                        schedule.getEndPeriod(),
+                        schedule.getRoom()
+                )
+        ).toList();
+
+        return new OpeningClass(
+                personalOpeningClass.getModuleClassCode(),
+                personalOpeningClass.getModuleName(),
+                personalOpeningClass.getNumberOfCredits(),
+                lecturer,
+                schedules,
+                personalOpeningClass.getMaxParticipants(),
+                personalOpeningClass.getCurrentParticipants()
         );
     }
 

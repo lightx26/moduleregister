@@ -7,6 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class Lecturer {
     private Long lecturerId;
+    private String lecturerCode;
     private String firstName;
     private String lastName;
 }

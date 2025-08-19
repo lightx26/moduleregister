@@ -3,6 +3,7 @@ package com.pet.moduleregister.infrastructure.adapters.in.web.classRegistration.
 import com.pet.moduleregister.application._shared.AuthUser;
 import com.pet.moduleregister.application.moduleClassStudent.dto.RegisteredModuleClass;
 import com.pet.moduleregister.application.moduleClassStudent.ports.in.usecases.RegisterModuleClass;
+import com.pet.moduleregister.infrastructure.adapters.in.web._shared.exceptions.UnauthorizedException;
 import com.pet.moduleregister.infrastructure.adapters.in.web._shared.security.AuthUtils;
 import com.pet.moduleregister.infrastructure.adapters.in.web.classRegistration.dto.request.ClassRegistrationParams;
 import com.pet.moduleregister.infrastructure.adapters.in.web.classRegistration.dto.response.RegisterSuccessResponse;
@@ -23,7 +24,7 @@ public class ClassRegistrationFacadeImpl implements ClassRegistrationFacade {
                         .status(user.getStatus())
                         .role(user.getRole())
                         .build()
-        ).orElseThrow(() -> new IllegalStateException("User not authenticated"));
+        ).orElseThrow(() -> new UnauthorizedException("User not authenticated"));
         // Implement the logic to register a class using the provided parameters
         // This is just a placeholder method
         RegisteredModuleClass registeredModuleClass = registerModuleClass.registerModuleClass(authUser, params.getModuleClassCode());

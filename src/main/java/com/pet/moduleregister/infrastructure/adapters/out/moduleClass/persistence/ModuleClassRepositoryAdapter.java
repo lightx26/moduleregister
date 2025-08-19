@@ -63,6 +63,7 @@ public class ModuleClassRepositoryAdapter implements ModuleClassRepositoryPort {
                     m.moduleName as moduleName,
                     m.numberOfCredits as numberOfCredits,
                     u.userId as lecturerId,
+                    u.userCode as lecturerCode,
                     u.firstName as lecturerFirstName,
                     u.lastName as lecturerLastName,
                     mc.maxParticipants as maxParticipants,
@@ -91,12 +92,13 @@ public class ModuleClassRepositoryAdapter implements ModuleClassRepositoryPort {
                     String moduleName = result.get("moduleName", String.class);
                     BigDecimal numberOfCredits = result.get("numberOfCredits", BigDecimal.class);
                     Long lecturerId = result.get("lecturerId", Long.class);
+                    String lecturerCode = result.get("lecturerCode", String.class);
                     String lecturerFirstName = result.get("lecturerFirstName", String.class);
                     String lecturerLastName = result.get("lecturerLastName", String.class);
                     int maxParticipants = result.get("maxParticipants", Integer.class);
                     int currentParticipants = result.get("currentParticipants", Long.class).intValue();
 
-                    Lecturer lecturer = new Lecturer(lecturerId, lecturerFirstName, lecturerLastName);
+                    Lecturer lecturer = new Lecturer(lecturerId, lecturerCode, lecturerFirstName, lecturerLastName);
 
                     return new OpeningClass(
                             moduleClassId,
@@ -122,6 +124,7 @@ public class ModuleClassRepositoryAdapter implements ModuleClassRepositoryPort {
                     mc.moduleClassCode as moduleClassCode,
                     mc.moduleId as moduleId,
                     u.userId as lecturerId,
+                    u.userCode as lecturerCode,
                     u.firstName as lecturerFirstName,
                     u.lastName as lecturerLastName,
                     mcs.status as learnStatus,
@@ -130,7 +133,9 @@ public class ModuleClassRepositoryAdapter implements ModuleClassRepositoryPort {
                 FROM ModuleClassEntity mc
                 JOIN UserEntity u ON mc.lecturerId = u.userId
                 LEFT JOIN ModuleClassStudentEntity mcs ON mc.moduleClassId = mcs.moduleClassId
-                WHERE mc.semesterId = :semesterId AND mc.moduleId IN :moduleIds AND mcs.status NOT IN :statuses
+                WHERE mc.semesterId = :semesterId
+                        AND mc.moduleId IN :moduleIds
+                        AND (mcs.status IS NULL OR mcs.status NOT IN :statuses)
                 GROUP BY mc.moduleClassId, mc.moduleClassCode,
                     u.userId, u.firstName, u.lastName,
                     mc.maxParticipants, mcs.status
@@ -149,13 +154,14 @@ public class ModuleClassRepositoryAdapter implements ModuleClassRepositoryPort {
                     String moduleClassCode = result.get("moduleClassCode", String.class);
                     Long moduleId = result.get("moduleId", Long.class);
                     Long lecturerId = result.get("lecturerId", Long.class);
+                    String lecturerCode = result.get("lecturerCode", String.class);
                     String lecturerFirstName = result.get("lecturerFirstName", String.class);
                     String lecturerLastName = result.get("lecturerLastName", String.class);
                     int maxParticipants = result.get("maxParticipants", Integer.class);
                     int currentParticipants = result.get("currentParticipants", Long.class).intValue();
                     LearnStatus learnStatus = result.get("learnStatus", LearnStatus.class);
 
-                    Lecturer lecturer = new Lecturer(lecturerId, lecturerFirstName, lecturerLastName);
+                    Lecturer lecturer = new Lecturer(lecturerId, lecturerCode, lecturerFirstName, lecturerLastName);
 
                     return PersonalOpeningClass.builder()
                             .moduleClassId(moduleClassId)
@@ -182,6 +188,7 @@ public class ModuleClassRepositoryAdapter implements ModuleClassRepositoryPort {
                     m.moduleName as moduleName,
                     m.numberOfCredits as numberOfCredits,
                     u.userId as lecturerId,
+                    u.userCode as lecturerCode,
                     u.firstName as lecturerFirstName,
                     u.lastName as lecturerLastName,
                     mc.maxParticipants as maxParticipants,
@@ -216,6 +223,7 @@ public class ModuleClassRepositoryAdapter implements ModuleClassRepositoryPort {
         Tuple firstResult = results.getFirst();
         Lecturer lecturer = new Lecturer(
                 firstResult.get("lecturerId", Long.class),
+                firstResult.get("lecturerCode", String.class),
                 firstResult.get("lecturerFirstName", String.class),
                 firstResult.get("lecturerLastName", String.class)
         );

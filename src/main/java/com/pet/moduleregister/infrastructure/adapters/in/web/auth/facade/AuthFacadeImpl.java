@@ -1,5 +1,6 @@
 package com.pet.moduleregister.infrastructure.adapters.in.web.auth.facade;
 
+import com.pet.moduleregister.application._shared.AuthUser;
 import com.pet.moduleregister.infrastructure.adapters.in.web.auth.dto.request.LoginParams;
 import com.pet.moduleregister.infrastructure.adapters.in.web._shared.security.AuthUtils;
 import com.pet.moduleregister.application.auth.ports.in.usecases.Login;
@@ -8,7 +9,6 @@ import com.pet.moduleregister.application.auth.ports.in.usecases.Refresh;
 import com.pet.moduleregister.application.auth.dto.LoginDataDTO;
 import com.pet.moduleregister.application.auth.dto.LoginResultDTO;
 import com.pet.moduleregister.application.auth.dto.LogoutDataDTO;
-import com.pet.moduleregister.entities.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -36,9 +36,11 @@ public class AuthFacadeImpl implements AuthFacade {
 
     @Override
     public void logout(String accessToken, String refreshToken) {
-        User currentUser = AuthUtils.getCurrentUser().orElseThrow(
-            () -> new IllegalArgumentException("User not authenticated")
-        );
+        com.pet.moduleregister.application._shared.AuthUser currentUser = AuthUtils.getCurrentUser()
+                .map(user -> AuthUser.builder()
+                        .userId(user.getUserId())
+                        .build())
+                .orElseThrow(() -> new IllegalArgumentException("User not authenticated"));
 
         logoutUsecase.logout(currentUser, new LogoutDataDTO(
             accessToken,

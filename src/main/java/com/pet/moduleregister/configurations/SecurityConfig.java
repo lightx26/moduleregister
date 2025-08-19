@@ -1,10 +1,10 @@
 package com.pet.moduleregister.configurations;
 
+import com.pet.moduleregister.application.user.ports.in.query.GetUserQuery;
 import com.pet.moduleregister.infrastructure.adapters.in.web._shared.security.CustomAuthenticationEntryPoint;
 import com.pet.moduleregister.infrastructure.adapters.in.web._shared.security.JwtAuthenticationFilter;
 import com.pet.moduleregister.application.auth.ports.out.TokenBlackListPort;
 import com.pet.moduleregister.application.auth.ports.out.TokenServicePort;
-import com.pet.moduleregister.application.user.ports.out.UserRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,8 +31,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public JwtAuthenticationFilter jwtFilter(TokenServicePort jwtTokenService, UserRepositoryPort repositoryPort, TokenBlackListPort tokenBlackListService) {
-        return new JwtAuthenticationFilter(jwtTokenService, repositoryPort, tokenBlackListService);
+    public JwtAuthenticationFilter jwtFilter(TokenServicePort jwtTokenService, GetUserQuery getUserQuery, TokenBlackListPort tokenBlackListService) {
+        return new JwtAuthenticationFilter(jwtTokenService, getUserQuery, tokenBlackListService);
     }
 
     @Bean

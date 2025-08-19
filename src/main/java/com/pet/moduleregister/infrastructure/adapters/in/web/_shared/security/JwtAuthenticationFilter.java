@@ -2,8 +2,7 @@ package com.pet.moduleregister.infrastructure.adapters.in.web._shared.security;
 
 import com.pet.moduleregister.application.auth.ports.out.TokenBlackListPort;
 import com.pet.moduleregister.application.auth.ports.out.TokenServicePort;
-import com.pet.moduleregister.application.user.ports.out.UserRepositoryPort;
-import com.pet.moduleregister.entities.user.User;
+import com.pet.moduleregister.application.user.ports.in.query.GetUserQuery;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -21,11 +20,11 @@ import java.util.Optional;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final TokenServicePort jwtTokenService;
-    private final UserRepositoryPort userRepository;
+    private final GetUserQuery getUserQuery;
     private final TokenBlackListPort tokenBlackListService;
-    public JwtAuthenticationFilter(TokenServicePort jwtTokenService, UserRepositoryPort userRepository, TokenBlackListPort tokenBlackListService) {
+    public JwtAuthenticationFilter(TokenServicePort jwtTokenService, GetUserQuery getUserQuery, TokenBlackListPort tokenBlackListService) {
         this.jwtTokenService = jwtTokenService;
-        this.userRepository = userRepository;
+        this.getUserQuery = getUserQuery;
         this.tokenBlackListService = tokenBlackListService;
     }
 
@@ -39,17 +38,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 && jwtTokenService.isValidToken(accessToken)) {
 
             Long userId = Long.parseLong(jwtTokenService.extractUserId(accessToken));
-            Optional<User> userOpt = userRepository.findById(userId);
+            Optional<AuthUser> authUserOpt = getUserQuery.getUserById(userId)
+                                                       .map(AuthUtils::mapToAuthUser);
 
-            if (userOpt.isEmpty()) {
+            if (authUserOpt.isEmpty()) {
                 filterChain.doFilter(request, response);
                 return;
             }
 
-            User user = userOpt.get();
+            AuthUser currentUser = authUserOpt.get();
             UsernamePasswordAuthenticationToken auth =
-                    new UsernamePasswordAuthenticationToken(user, null, List.of(new SimpleGrantedAuthority(
-                            user.getRole().name()
+                    new UsernamePasswordAuthenticationToken(currentUser, null, List.of(new SimpleGrantedAuthority(
+                            currentUser.getRole().name()
                     )));
             SecurityContextHolder.getContext().setAuthentication(auth);
         }

@@ -1,12 +1,12 @@
 package com.pet.moduleregister.application.auth.services.usecases;
 
+import com.pet.moduleregister.application._shared.AuthUser;
 import com.pet.moduleregister.application.auth.ports.in.usecases.Logout;
 import com.pet.moduleregister.application.auth.dto.LogoutDataDTO;
 import com.pet.moduleregister.application.auth.ports.out.AuthTokenRepositoryPort;
 import com.pet.moduleregister.application.auth.ports.out.TokenBlackListPort;
 import com.pet.moduleregister.application.auth.ports.out.TokenServicePort;
 import com.pet.moduleregister.application.auth.dto.AuthTokenDTO;
-import com.pet.moduleregister.entities.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +22,7 @@ public class LogoutImpl implements Logout {
 
     @Override
     @Transactional
-    public void logout(User currentUser, LogoutDataDTO logoutData) {
+    public void logout(AuthUser currentUser, LogoutDataDTO logoutData) {
         String accessToken = logoutData.accessToken();
         String refreshToken = logoutData.refreshToken();
 
